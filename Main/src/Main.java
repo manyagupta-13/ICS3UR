@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main extends JFrame{
-    private JPanel Main;
+    private JPanel main;
     private JPanel parentPanel;
     private JPanel mainMenu;
     private JPanel gameOptions;
@@ -24,7 +24,7 @@ public class Main extends JFrame{
     private String p2CharChoice = "";
 
     public Main() {
-        setContentPane(Main);
+        setContentPane(main);
         setTitle("Battlistas");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500, 400);
