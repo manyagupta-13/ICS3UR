@@ -2,19 +2,25 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 
 public class Player{
-  //Atributes of each player
+  //Player's character choice
   private String character;
-
+  //Player's choise to shoot or move
   private boolean move;
   private boolean shoot;
+  //Player's helth
   private int health;
+  //Coordinates of top left corner of character image
   private int xPos;
   private int yPos;
+  //Width and height of character image
   private final static int width;
   private final static int height;
+  //Objects to determine health and other attributed
   private Weapon weapon;
   private Projectile projectile;
+  //Object to determine width and height of character image
   private BufferedImage size = Image.IO(new File(//fileName));
+  //Object to determine collision
   private Hitbox hitbox = new Hitbox(getCoordianteX(), getCoordinateY(), getWidth(), getHeight());
 
   //Image for Player GUI Representation
@@ -45,6 +51,7 @@ public class Player{
     }
   }
 
+  //Return boolean if player decides to move
   public void setMove(){
     if(move button clicked){
       move = true;
@@ -54,6 +61,7 @@ public class Player{
     }
   }
 
+  //Return boolean if player decides to shoot
   public void setShoot(){
     if(shoot button clicked){
       shoot = true;
@@ -64,6 +72,7 @@ public class Player{
     }
   }
 
+  //Reduce health if player gets hit
   public void setHealth(){
     if(hitbox.intersects() == true){
       if(player.getCharacter() == "cannon"){
@@ -75,6 +84,7 @@ public class Player{
     }
   }
 
+  //Set top left coordinates of image character
   public void setCoordinateY(int y){ 
       yPos = y;
   }
@@ -83,6 +93,7 @@ public class Player{
         xPos = x;
   }
 
+  //Set width and height of image character
   public void setWidth(){
     width = size.getWidth();
   }
@@ -91,26 +102,32 @@ public class Player{
     height = size.getHeight();
   }
 
+  //Return character chosen by player
   public String getCharacter(){
     return character;
   }
 
+  //Return if player decides to move
   public boolean getMove(){
     return move;
   }
 
+  //Return if player decides to shoot
   public boolean getShoot(){
     return shoot;
   }
 
+  //Return player's health
   public int getHealth(){
     return health;
   }
 
+  //Return character image
   public Image getImage() {
     return image;
   }
 
+  //Return top left coordinates of image character
   public int getCoordinateX(){
     return xPos;
   }
@@ -119,6 +136,7 @@ public class Player{
     return yPos;
   }
 
+  //Return width and height of image character
   public int getWidth(){
     return width;
   }
