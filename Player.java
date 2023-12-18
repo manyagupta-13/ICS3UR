@@ -46,10 +46,10 @@ public class Player{
   public void setHealth(){
     if(hitbox.intersects() == true){
       if(player.getCharacter() == "ballista"){
-        health -= weapon.getDamage(); //change number later
+        health -= projectile.getDamage(); //change number later
       }
       else{
-        health -= weapon.getDamage(); //change number later
+        health -= projectile.getDamage(); //change number later
       }
     }
   }
