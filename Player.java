@@ -10,6 +10,7 @@ public class Player{
   private Weapon weapon;
   private int xPos;
   private int yPos;
+  private Hitbox hitbox;
 
   //Image for Player GUI Representation
   private Image playerIcon;
