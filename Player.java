@@ -8,10 +8,14 @@ public class Player{
   private boolean move;
   private boolean shoot;
   private int health;
-  private Weapon weapon;
   private int xPos;
   private int yPos;
-  private Hitbox hitbox = new Hitbox(getCoordianteX(), getCoordinateY());
+  private final static int width;
+  private final static int height;
+  private Weapon weapon;
+  private Projectile projectile;
+  private BufferedImage size = Image.IO(new File(//fileName));
+  private Hitbox hitbox = new Hitbox(getCoordianteX(), getCoordinateY(), getWidth(), getHeight());
 
   //Image for Player GUI Representation
   private Image playerIcon;
@@ -79,6 +83,14 @@ public class Player{
         xPos = x;
   }
 
+  public void setWidth(){
+    width = size.getWidth();
+  }
+
+  public void setHeight(){
+    height = size.getHeight();
+  }
+
   public String getCharacter(){
     return character;
   }
@@ -99,11 +111,19 @@ public class Player{
     return image;
   }
 
-  public getCoordinateX(){
+  public int getCoordinateX(){
     return xPos;
   }
 
-  public getCoordinateY(){
+  public int getCoordinateY(){
     return yPos;
+  }
+
+  public int getWidth(){
+    return width;
+  }
+
+  public int getHeight(){
+    return height;
   }
 }
