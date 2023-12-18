@@ -90,6 +90,9 @@ public class Player{
   }
 
   public void setXPos(int x){
+    if(Hitbox.intersects() == false){
+      xPos = changeXPos();
+    }
     xPos = x;
   }
 
