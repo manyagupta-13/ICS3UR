@@ -3,7 +3,7 @@ public class Player{
   private boolean move;
   private boolean shoot;
   private static int health = 100;
-  private Weapon weapon = new Weapon();
+  private Projectile projectile = new Projectile();
   private int posX;
   private int posY;
 
