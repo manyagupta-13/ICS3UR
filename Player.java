@@ -1,26 +1,42 @@
+import javax.swing.ImageIcon;
+import java.awt.Image;
+
 public class Player{
-  private String characters;
+  private String character;
+
   private boolean move;
   private boolean shoot;
-  private int health = 100;
-  private Projectile projectile = new Projectile();
-  private int posX;
-  private int posY;
+  private int health;
+  private Weapon weapon;
+  private int xPos;
+  private int yPos;
+  private Hitbox hitbox;
 
+  //Image for Player GUI Representation
+  private Image playerIcon;
 
-  public Player(String c, boolean m, boolean s){
-    characters = c;
-    move = m;
-    shoot = s;
-    getHealth();
-  }
+  public Player(String character_, int startingXPos,  int startingYPos){
+    //Image Path variables (to be deleted later - currently implemented for testing)
+    String wizardImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG";
+    String cannonImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG";
 
-  public void setCharacter(){
-    if(ballista button clicked)){
-      characters = "ballista";
-    }
-    else{
-      characters = "wizard";
+    //Starting Coordinates
+    xPos = startingXPos;
+    yPos = startingYPos;
+
+    //Character Dependent Starting Conditions
+    character = character_;
+    switch(character_) {
+      case "wizard":
+        health = 75;
+        weapon = new Weapon("[Weapon Here]");
+        ImageIcon playerIcon = new ImageIcon(wizardImagePath);
+        image = playerIcon.getImage();
+
+      case "cannon":
+        health = 125;
+        weapon = new Weapon("[Weapon Here]");
+        //loadImage('C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG')
     }
   }
 
@@ -45,26 +61,21 @@ public class Player{
 
   public void setHealth(){
     if(hitbox.intersects() == true){
-      if(player.getCharacter() == "ballista"){
-        health -= projectile.getDamage(); //change number later
+      if(player.getCharacter() == "cannon"){
+        health -= weapon.getDamage(); //change number later
       }
       else{
-        health -= projectile.getDamage(); //change number later
+        health -= weapon.getDamage(); //change number later
       }
     }
   }
 
-  public void setCoordinateY(float y){ 
-      posY = y;
+  public void setCoordinateY(int y){ 
+      yPos = y;
   }
 
-  public void setCoordinateX(float x){
-      if(move button clicked){
-        //random coordinate x (have to ask size of screen) posX = 
-      }
-      else{
-        posX = x;
-      }
+  public void setCoordinateX(int x){
+        xPos = x;
   }
 
   public String getCharacter(){
@@ -81,5 +92,9 @@ public class Player{
 
   public int getHealth(){
     return health;
+  }
+
+  public Image getImage() {
+    return image;
   }
 }
