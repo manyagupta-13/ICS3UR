@@ -97,4 +97,13 @@ public class Player{
   public Image getImage() {
     return image;
   }
+
+  //Return width and height of image character
+  public int getWidth(){
+    return width;
+  }
+
+  public int getHeight(){
+    return height;
+  }
 }
