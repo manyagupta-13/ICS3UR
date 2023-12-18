@@ -2,7 +2,7 @@ public class Player{
   private String characters;
   private boolean move;
   private boolean shoot;
-  private static int health = 100;
+  private int health = 100;
   private Projectile projectile = new Projectile();
   private int posX;
   private int posY;
