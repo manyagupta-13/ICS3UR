@@ -19,7 +19,7 @@ public class Player{
   private Weapon weapon;
   private Projectile projectile;
   //Object to determine width and height of character image
-  private BufferedImage size = Image.IO(new File(//fileName));
+  private BufferedImage size = ImageIO(new File(//fileName));
   //Object to determine collision
   private Hitbox hitbox = new Hitbox(getCoordianteX(), getCoordinateY(), getWidth(), getHeight());
 
