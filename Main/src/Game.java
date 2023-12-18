@@ -54,6 +54,17 @@ public class Game extends JFrame {
             case 2:
                 drawMap3(g);
         }
+        super.paint(g);
+        g.clearRect(0, 0, getWidth(), getHeight());
+        //g.drawString("Coordinates: (" + x + ", " + y + ")", 150, 50);
+        g.setColor(Color.BLUE);
+        g.fillRect(0, 0, 50, 50);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new Game("wizard", "ballista", 0);
+        });
     }
 
 
@@ -61,24 +72,12 @@ public class Game extends JFrame {
     private void drawMap1(Graphics g) {
 
     }
+
     private void drawMap2(Graphics g) {
 
     }
+
     private void drawMap3(Graphics g) {
 
     }
-
-
-
-
-
-
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            //Swing operations here
-            new Game("wizard", "ballista", 0);
-        });
-    }
-
 }
