@@ -15,7 +15,7 @@ public class Player{
   //Image for Player GUI Representation
   private Image playerIcon;
 
-  public Player(String character_, int startingXPos  int startingYPos){
+  public Player(String character_, int startingXPos,  int startingYPos){
     //Image Path variables (to be deleted later - currently implemented for testing)
     String wizardImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG";
     String cannonImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG";
@@ -70,17 +70,12 @@ public class Player{
     }
   }
 
-  public void setCoordinateY(float y){ 
+  public void setCoordinateY(int y){ 
       yPos = y;
   }
 
-  public void setCoordinateX(float x){
-      if(move button clicked){
-        //random coordinate x (have to ask size of screen) xPos = 
-      }
-      else{
+  public void setCoordinateX(int x){
         xPos = x;
-      }
   }
 
   public String getCharacter(){
