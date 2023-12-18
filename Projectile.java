@@ -5,7 +5,8 @@ public class Projectile implements Coordinate {
     private int fireDamage;
     private int xPos;
     private int yPos;
-    private int turnsBurning
+    private int turnsBurning;
+    Weapon weapon;
 
     // Default constructor
     public Projectile() {
@@ -29,8 +30,8 @@ public class Projectile implements Coordinate {
     }
 
     // Getter methods
-    public int getDamage() {
-        return damage;
+    public double getDamage() {
+        return weapon.calcDamage();
     }
 
     public String getSpecEff() {
@@ -108,4 +109,11 @@ public class Projectile implements Coordinate {
     public int dealDamage(){
         //work in progress, need to see others stuff to get an idea of how to do this
     }
+
+    public void changeXPos(){
+        xPos += weapon.calcRange();
+    }
 }
+
+
+    
