@@ -7,18 +7,19 @@ public class Projectile implements Coordinate {
     private int yPos;
     private int turnsBurning;
     Weapon weapon;
+    Player player;
 
     // Default constructor
     public Projectile() {
-        this(0, false); // Default values for damage and isExp
+        this(false); // Default values for damage and isExp
     }
 
     // Constructor with damage and special effect
     public Projectile(boolean isExp) {
         this.isExp = isExp;
         this.fireDamage = 1; // Default value for fire damage
-        this.xPos = 0; // Default value for X position
-        this.yPos = 0; // Default value for Y position
+        this.xPos = player.getCoordinateX(); // Default value for X position
+        this.yPos = getCoordinateY(); // Default value for Y position
         this.turnsBurning = 0; //Default value for turns to burn
     }
 
