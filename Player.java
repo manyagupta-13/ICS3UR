@@ -2,6 +2,7 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 
 public class Player{
+  //Atributes of each player
   private String character;
 
   private boolean move;
@@ -10,7 +11,7 @@ public class Player{
   private Weapon weapon;
   private int xPos;
   private int yPos;
-  private Hitbox hitbox;
+  private Hitbox hitbox = new Hitbox(getCoordianteX(), getCoordinateY());
 
   //Image for Player GUI Representation
   private Image playerIcon;
@@ -96,5 +97,13 @@ public class Player{
 
   public Image getImage() {
     return image;
+  }
+
+  public getCoordinateX(){
+    return xPos;
+  }
+
+  public getCoordinateY(){
+    return yPos;
   }
 }
