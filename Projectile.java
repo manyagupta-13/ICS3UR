@@ -106,9 +106,9 @@ public class Projectile implements Coordinate {
         return false; 
     }
 
-    public int dealDamage(){
+    /*public int dealDamage(){
         //work in progress, need to see others stuff to get an idea of how to do this
-    }
+    }*/
 
     public void changeXPos(){
         xPos += weapon.calcRange();
