@@ -6,25 +6,25 @@ public class JavaApplication6 extends JFrame {
 
     public JavaApplication6() {
         JFrame j = new JFrame("Field");
-        Scanner console = new Scanner(System.in);
+        Scanner console = new Scanner(System.in); // Replace Scanner with GUI button once implemented
         System.out.println("Enter 1, 2 or 3");
         int choice = console.nextInt();
         if (choice == 1) {
-            ImageIcon field1 = new ImageIcon("C:/users/lidan/OneDrive/Documents/NetBeansProjects/JavaApplication6/src/javaapplication6/resource/field.png");
+            ImageIcon field1 = new ImageIcon("C:/users/lidan/OneDrive/Documents/NetBeansProjects/JavaApplication6/src/javaapplication6/resource/field.png"); // Temporary gamefield1 in resource file
             Image gamefield = field1.getImage();
             JLabel a = new JLabel(new ImageIcon(gamefield));
             add(a);
             pack();
             
         } else if (choice == 2) {
-            ImageIcon field2 = new ImageIcon("C:/users/lidan/OneDrive/Documents/NetBeansProjects/JavaApplication6/src/javaapplication6/resource/terrain.png");
+            ImageIcon field2 = new ImageIcon("C:/users/lidan/OneDrive/Documents/NetBeansProjects/JavaApplication6/src/javaapplication6/resource/terrain.png"); // Temporary gamefield2
             Image gamefield = field2.getImage();
             JLabel b = new JLabel(new ImageIcon(gamefield));
             add(b);
             pack();
             
         } else if (choice == 3) {
-            ImageIcon field3 = new ImageIcon("C:/users/lidan/OneDrive/Documents/NetBeansProjects/JavaApplication6/src/javaapplication6/resource/field2.png");
+            ImageIcon field3 = new ImageIcon("C:/users/lidan/OneDrive/Documents/NetBeansProjects/JavaApplication6/src/javaapplication6/resource/field2.png"); // Temporary gamefield3
             Image gamefield = field3.getImage();
             JLabel c = new JLabel(new ImageIcon(gamefield));
             add(c);
@@ -38,7 +38,7 @@ public class JavaApplication6 extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(()
         -> { JavaApplication6 generateField = new JavaApplication6();
-        generateField.setVisible(true);
+        generateField.setVisible(true); // Makes gamefield visible
            
         }
         );
