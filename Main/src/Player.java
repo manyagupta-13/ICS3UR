@@ -17,11 +17,11 @@ public class Player {
   private final static int width;
   private final static int height;
   //Objects to determine health and other attributed
-  private Weapon weapon;
+  private Weapons weapon;
   private Projectile projectile;
 
   //Object to determine collision
-  private Hitbox hitbox = new Hitbox(getCoordianteX(), getCoordinateY(), getWidth(), getHeight());
+  private Hitbox hitbox = new Hitbox(getCoordinateX(), getCoordinateY(), getWidth(), getHeight());
 
   //Image for Player GUI Representation
   private Image playerImage;
@@ -41,7 +41,7 @@ public class Player {
       switch (character_) {
           case "wizard" -> {
               health = 75;
-              weapon = new Weapon("[Weapon Here]");
+              weapon = new Weapons("[Weapon Here]");
 
               //Load player Image
               ImageIcon playerIcon = new ImageIcon(wizardImagePath);
@@ -51,7 +51,7 @@ public class Player {
           }
           case "cannon" -> {
               health = 125;
-              weapon = new Weapon("[Weapon Here]");
+              weapon = new Weapons("[Weapon Here]");
 
               //loadImage('C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG')
               ImageIcon playerIcon = new ImageIcon(cannonImagePath);
@@ -125,11 +125,11 @@ public class Player {
   }
 
   //Return top left coordinates of image character
-  public int getCoordinateX(){
+  public int getXPos(){
     return xPos;
   }
 
-  public int getCoordinateY(){
+  public int getYPos(){
     return yPos;
   }
 

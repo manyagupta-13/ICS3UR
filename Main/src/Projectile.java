@@ -1,4 +1,4 @@
-public class Projectile implements Coordinate {
+public class Projectile{
 
     // Attributes
     private boolean isExp;
@@ -6,8 +6,6 @@ public class Projectile implements Coordinate {
     private int xPos;
     private int yPos;
     private int turnsBurning;
-    Weapon weapon;
-    Player player;
 
 
     // Default constructor
@@ -17,11 +15,11 @@ public class Projectile implements Coordinate {
 
     // Constructor with damage and special effect
     public Projectile(boolean isExp) {
-        this.isExp = isExp;
-        this.fireDamage = 1; // Default value for fire damage
-        this.xPos = player.getCoordinateX(); // Default value for X position
-        this.yPos = getCoordinateY(); // Default value for Y position
-        this.turnsBurning = 0; //Default value for turns to burn
+        isExp = isExp;
+        fireDamage = 1; // Default value for fire damage
+        xPos = getXPos(); // Default value for X position
+        yPos = getYPos(); // Default value for Y position
+        turnsBurning = 0; //Default value for turns to burn
     }
 
     // Constructor with damage, special effect, and initial position
@@ -33,7 +31,7 @@ public class Projectile implements Coordinate {
 
     // Getter methods
     public double getDamage() {
-        return weapon.calcDamage();
+        return weapons.calcDamage();
     }
 
     public String getSpecEff() {
@@ -78,12 +76,10 @@ public class Projectile implements Coordinate {
     }
 
     // Coordinate interface methods
-    @Override
     public int getX() {
         return xPos;
     }
 
-    @Override
     public int getY() {
         return yPos;
     }
