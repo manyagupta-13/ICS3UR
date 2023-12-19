@@ -9,6 +9,7 @@ public class Projectile implements Coordinate {
     Weapon weapon;
     Player player;
 
+
     // Default constructor
     public Projectile() {
         this(false); // Default values for damage and isExp
