@@ -53,9 +53,9 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     }
 
-    public static void weaponFired(Player player){
+    //public static void weaponFired(Player player){
         //Get path from player's weapon
-    }
+    //}
 
     //Paint
     //TODO: (Kale) Try to resolve flickering through double-buffering by rendering in gameFieldPanel only
