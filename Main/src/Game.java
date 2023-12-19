@@ -1,9 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 
-public class Game extends JFrame implements MouseMotionListener {
+public class Game extends JFrame implements MouseMotionListener, MouseListener {
+    //GUI Related Instance Variables
     private JPanel gamePanel;
     private JProgressBar progressBar1;
     private JProgressBar progressBar2;
@@ -12,6 +15,7 @@ public class Game extends JFrame implements MouseMotionListener {
     private JPanel gameFieldPanel;
 
     private final int mapSelection;
+    private BufferedImage gameFieldVisuals;
 
     //private final Player player1;
     //private final Player player2;
@@ -30,13 +34,13 @@ public class Game extends JFrame implements MouseMotionListener {
         setContentPane(gamePanel);
         setTitle("Battlistas");
 
-
-
         //Define Panel Attributes
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(1400, 500);
+        setSize(1400, 600);
         setLocationRelativeTo(null);
         setVisible(true);
+
+
 
         /*TODO: Ensure connectivity to player objects
         Code dependencies to be integrated:
@@ -49,11 +53,15 @@ public class Game extends JFrame implements MouseMotionListener {
 
     }
 
+    public static void weaponFired(Player player){
+        //Get path from player's weapon
+    }
+
+    //Paint
     //TODO: (Kale) Try to resolve flickering through double-buffering by rendering in gameFieldPanel only
     @Override
     public void paint(Graphics g) {
         super.paintComponents(g);
-
         //Draw Players
         //g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos, this);
         //g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos, this);
@@ -65,10 +73,13 @@ public class Game extends JFrame implements MouseMotionListener {
         switch (mapSelection) {
             case 0:
                 drawMap1(g);
+                break;
             case 1:
                 drawMap2(g);
+                break;
             case 2:
                 drawMap3(g);
+                break;
         }
     }
 
@@ -78,7 +89,7 @@ public class Game extends JFrame implements MouseMotionListener {
         });
     }
 
-
+    //Map Drawings
     //TODO: (Chris) Add Obstacle design in drawMap# Methods
     private void drawMap1(Graphics g) {
         //Example code on drawing a rectangle (You specify xPos and yPos for each rectangle)
@@ -95,6 +106,7 @@ public class Game extends JFrame implements MouseMotionListener {
 
     }
 
+    //Mouse Input Listener Methods
     @Override
     public void mouseDragged(MouseEvent e) {
         //TODO: (Manya + Jimmy) Feed mouse dragged position to weapon object through player
@@ -107,10 +119,10 @@ public class Game extends JFrame implements MouseMotionListener {
 
         switch (currentTurn) {
             case 0:
-                //player1.weapon.pullBackCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
+                //player1.weapon.setCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
                 break;
             case 1:
-                //player2.weapon.pullBackCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
+                //player2.weapon.setCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
                 break;
         }
         repaint();
@@ -119,5 +131,30 @@ public class Game extends JFrame implements MouseMotionListener {
     //mouseMoved method from MouseMotionListener interface - never used
     @Override
     public void mouseMoved(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
