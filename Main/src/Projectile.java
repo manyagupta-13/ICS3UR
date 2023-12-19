@@ -21,7 +21,7 @@ public class Projectile{
 
     // Constructor with damage and special effect
     public Projectile(int isExp) {
-        damage = -1;
+        damage = -10;
         this.isExp = isExp;
         fireDamage = 1; // Default value for fire damage
         xPos = getXPos(); // Default value for X position
