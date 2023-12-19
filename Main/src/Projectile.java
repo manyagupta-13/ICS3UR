@@ -9,9 +9,11 @@ public class Projectile{
     private int yPos;
     private int turnsBurning;
     private int damage;
-    Hitbox hitbox = new Hitbox(1,1,1,1);
-    private Image displayImg;
+    Hitbox hitbox = new Hitbox();
+    private Image fireball = new Image(fireball.png);
     private int direction;
+    private xCenterBall;
+    private yCenterBall;
 
 
     // Default constructor
@@ -71,11 +73,11 @@ public class Projectile{
     }
 */
     // Coordinate interface methods
-    public int getX() {
+    public int getXPos() {
         return xPos;
     }
 
-    public int getY() {
+    public int getYPos() {
         return yPos;
     }
 
@@ -85,6 +87,22 @@ public class Projectile{
 
   public void setYPos(int y){
     yPos = y;
+  }
+
+    public int getXCenterBall() {
+        return xCenterBall;
+    }
+
+    public int getYCenterBall() {
+        return yCenterBall;
+    }
+
+  public void setXCenterBall(int x){
+    xCenterBall = x;
+  }
+
+  public void setYCenterBall(int y){
+    yCenterBall = y;
   }
 
   public int getDirection() {
