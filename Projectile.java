@@ -6,8 +6,10 @@ public class Projectile implements Coordinate {
     private int xPos;
     private int yPos;
     private int turnsBurning;
-    Weapon weapon;
+    Weapons weapon;
+
     Player player;
+
 
     // Default constructor
     public Projectile() {
