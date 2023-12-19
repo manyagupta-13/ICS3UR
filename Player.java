@@ -32,8 +32,8 @@ public class Player{
     String cannonImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG";
 
     //Starting Coordinates
-    setXPos(startingXPos);
-    setYPos(startingYPos);
+    xPos = startingXPos;
+    yPos = startingYPos;
 
     //Character Dependent Starting Conditions
     character = character_;
@@ -85,15 +85,12 @@ public class Player{
   }
 
   //Set top left coordinates of image character
-  public void setYPos(int y){
+  public void setCoordinateY(int y){ 
       yPos = y;
   }
 
-  public void setXPos(int x){
-    if(Hitbox.intersects() == false){
-      xPos = changeXPos();
-    }
-    xPos = x;
+  public void setCoordinateX(int x){
+        xPos = x;
   }
 
   //Set width and height of image character
