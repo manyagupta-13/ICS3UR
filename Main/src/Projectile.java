@@ -16,7 +16,7 @@ public class Projectile{
 
     // Default constructor
     public Projectile() {
-        this(false); // Default values for damage and isExp
+        this(0); // Default values for isExp
     }
 
     // Constructor with damage and special effect
@@ -30,13 +30,13 @@ public class Projectile{
         direction = 0;
     }
 
-    // Constructor with damage, special effect, and initial position
-    public Projectile(boolean isExp, int xPos, int yPos) {
+   /* // Constructor with damage, special effect, and initial position
+    public Projectile(int isExp, int xPos, int yPos) {
         this(isExp);
         this.xPos = xPos;
         this.yPos = yPos;
     }
-
+*/
     // Getter methods
     public double getDamage() {
         return damage;
