@@ -41,7 +41,7 @@ public class Player {
       switch (character_) {
           case "wizard" -> {
               health = 75;
-              weapon = new Weapons("[Weapon Here]");
+              weapon = new Weapons(8);
 
               //Load player Image
               ImageIcon playerIcon = new ImageIcon(wizardImagePath);
@@ -51,7 +51,7 @@ public class Player {
           }
           case "cannon" -> {
               health = 125;
-              weapon = new Weapons("[Weapon Here]");
+              weapon = new Weapons(7);
 
               //loadImage('C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG')
               ImageIcon playerIcon = new ImageIcon(cannonImagePath);
