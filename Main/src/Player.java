@@ -11,8 +11,11 @@ public class Player {
   //Player's health
   private int health;
   //Coordinates of top left corner of character image
-  private int xPos;
-  private int yPos;
+  private int xImagePos;
+  private int yImagePos;
+  //Coordiantes of top right corner of weapon image
+  private int xWeaponPos;
+  private int yWeaponPos;
   //Width and height of character image
   private final static int width;
   private final static int height;
@@ -33,8 +36,8 @@ public class Player {
 
 
     //Starting Coordinates
-    xPos = startingXPos;
-    yPos = startingYPos;
+    xImagePos = startingXPos;
+    yImagePos = startingYPos;
 
     //Character Dependent Starting Conditions
     character = character_;
@@ -90,14 +93,16 @@ public class Player {
 
   //Set top left coordinates of image character
   public void setImageCoordinateY(int y){ 
-      yPos = y;
+      yImagePos = y;
   }
 
   public void setImageCoordinateX(int x){
-        xPos = x;
+      xImagePos = x;
   }
 
-
+  public void setWeaponCoordinateY(){
+    yWeaponPos = 
+  }
 
   //Return character chosen by player
   public String getCharacter(){
