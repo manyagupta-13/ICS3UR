@@ -24,7 +24,7 @@ public class Player{
   private Hitbox hitbox = new Hitbox(getCoordianteX(), getCoordinateY(), getWidth(), getHeight());
 
   //Image for Player GUI Representation
-  private Image playerIcon;
+  private Image playerImage;
 
   public Player(String character_, int startingXPos,  int startingYPos){
     //Image Path variables (to be deleted later - currently implemented for testing)
