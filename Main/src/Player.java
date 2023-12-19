@@ -1,13 +1,14 @@
-import javax.swing.ImageIcon;
+import javax.swing.*;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
-public class Player{
+public class Player {
   //Player's character choice
-  private String character;
-  //Player's choise to shoot or move
+  private final String character;
+  //Player's choice to shoot or move
   private boolean move;
   private boolean shoot;
-  //Player's helth
+  //Player's health
   private int health;
   //Coordinates of top left corner of character image
   private int xPos;
@@ -18,18 +19,18 @@ public class Player{
   //Objects to determine health and other attributed
   private Weapon weapon;
   private Projectile projectile;
-  //Object to determine width and height of character image
-  private BufferedImage size = ImageIO(new File(//fileName));
+
   //Object to determine collision
   private Hitbox hitbox = new Hitbox(getCoordianteX(), getCoordinateY(), getWidth(), getHeight());
 
   //Image for Player GUI Representation
-  private Image playerIcon;
+  private Image playerImage;
 
   public Player(String character_, int startingXPos,  int startingYPos){
-    //Image Path variables (to be deleted later - currently implemented for testing)
-    String wizardImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG";
-    String cannonImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG";
+    //TODO: Get image paths for positioning
+    String wizardImagePath = "";
+    String cannonImagePath = "";
+
 
     //Starting Coordinates
     xPos = startingXPos;
@@ -37,18 +38,28 @@ public class Player{
 
     //Character Dependent Starting Conditions
     character = character_;
-    switch(character_) {
-      case "wizard":
-        health = 75;
-        weapon = new Weapon("[Weapon Here]");
-        ImageIcon playerIcon = new ImageIcon(wizardImagePath);
-        image = playerIcon.getImage();
+      switch (character_) {
+          case "wizard" -> {
+              health = 75;
+              weapon = new Weapon("[Weapon Here]");
 
-      case "cannon":
-        health = 125;
-        weapon = new Weapon("[Weapon Here]");
-        //loadImage('C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG')
-    }
+              //Load player Image
+              ImageIcon playerIcon = new ImageIcon(wizardImagePath);
+              playerImage = playerIcon.getImage();
+              width = playerIcon.getIconWidth();
+              height = playerIcon.getIconHeight();
+          }
+          case "cannon" -> {
+              health = 125;
+              weapon = new Weapon("[Weapon Here]");
+
+              //loadImage('C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG')
+              ImageIcon playerIcon = new ImageIcon(cannonImagePath);
+              playerImage = playerIcon.getImage();
+              width = playerIcon.getIconWidth();
+              height = playerIcon.getIconHeight();
+          }
+      }
   }
 
   //Return boolean if player decides to move
@@ -73,15 +84,8 @@ public class Player{
   }
 
   //Reduce health if player gets hit
-  public void setHealth(){
-    if(hitbox.intersects() == true){
-      if(player.getCharacter() == "cannon"){
-        health -= weapon.getDamage(); //change number later
-      }
-      else{
-        health -= weapon.getDamage(); //change number later
-      }
-    }
+  public void setHealth(int health_){
+    health = health_;
   }
 
   //Set top left coordinates of image character
@@ -93,14 +97,7 @@ public class Player{
         xPos = x;
   }
 
-  //Set width and height of image character
-  public void setWidth(){
-    width = size.getWidth();
-  }
 
-  public void setHeight(){
-    height = size.getHeight();
-  }
 
   //Return character chosen by player
   public String getCharacter(){
@@ -124,7 +121,7 @@ public class Player{
 
   //Return character image
   public Image getImage() {
-    return image;
+    return playerImage;
   }
 
   //Return top left coordinates of image character
