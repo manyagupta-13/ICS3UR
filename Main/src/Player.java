@@ -19,8 +19,7 @@ public class Player {
   //Objects to determine health and other attributed
   private Weapon weapon;
   private Projectile projectile;
-  //Object to determine width and height of character image
-  private BufferedImage size = ImageIO(new File(//fileName));
+
   //Object to determine collision
   private Hitbox hitbox = new Hitbox(getCoordianteX(), getCoordinateY(), getWidth(), getHeight());
 
@@ -122,7 +121,7 @@ public class Player {
 
   //Return character image
   public Image getImage() {
-    return image;
+    return playerImage;
   }
 
   //Return top left coordinates of image character
