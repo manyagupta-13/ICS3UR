@@ -24,19 +24,10 @@ public class Projectile{
         damage = -10;
         this.isExp = isExp;
         fireDamage = 1; // Default value for fire damage
-        xPos = getXPos(); // Default value for X position
-        yPos = getYPos(); // Default value for Y position
         turnsBurning = 0; //Default value for turns to burn
         direction = 0;
     }
 
-   /* // Constructor with damage, special effect, and initial position
-    public Projectile(int isExp, int xPos, int yPos) {
-        this(isExp);
-        this.xPos = xPos;
-        this.yPos = yPos;
-    }
-*/
     // Getter methods
     public double getDamage() {
         return damage;
