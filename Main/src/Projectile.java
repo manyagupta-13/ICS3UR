@@ -1,11 +1,17 @@
+import java.awt.Image;
+
 public class Projectile{
 
     // Attributes
-    private boolean isExp;
+    private int isExp;
     private int fireDamage;
     private int xPos;
     private int yPos;
     private int turnsBurning;
+    private int damage;
+    Hitbox hitbox = new Hitbox(1,1,1,1);
+    private Image displayImg;
+    private int direction;
 
 
     // Default constructor
@@ -14,12 +20,14 @@ public class Projectile{
     }
 
     // Constructor with damage and special effect
-    public Projectile(boolean isExp) {
-        isExp = isExp;
+    public Projectile(int isExp) {
+        damage = -1;
+        this.isExp = isExp;
         fireDamage = 1; // Default value for fire damage
         xPos = getXPos(); // Default value for X position
         yPos = getYPos(); // Default value for Y position
         turnsBurning = 0; //Default value for turns to burn
+        direction = 0;
     }
 
     // Constructor with damage, special effect, and initial position
@@ -31,15 +39,11 @@ public class Projectile{
 
     // Getter methods
     public double getDamage() {
-        return weapons.calcDamage();
+        return damage;
     }
 
-    public String getSpecEff() {
+    /*public String getSpecEff() {
         return specEff;
-    }
-
-    public float getExplosionArea() {
-        return expArea;
     }
 
     public boolean getIsExplosive() {
@@ -53,12 +57,12 @@ public class Projectile{
     public int getTurnsBurning(){
         return turnsBurning;
     }
-
+*/
     // Setter methods
     public void setDamage(int d) {
         damage = d;
     }
-
+/*
     public void setSpecEff(String se) {
         specEff = se;
     }
@@ -74,7 +78,7 @@ public class Projectile{
     public void setTurnsBurning(int t){
         turnsBurning = t;
     }
-
+*/
     // Coordinate interface methods
     public int getX() {
         return xPos;
@@ -84,6 +88,22 @@ public class Projectile{
         return yPos;
     }
 
+  public void setXPos(int x){
+    xPos = x;
+  }
+
+  public void setYPos(int y){
+    yPos = y;
+  }
+
+  public int getDirection() {
+        return direction;
+    }
+
+  public void setDirection(int direction){
+    direction = d;
+  }
+/*
     // Additional methods
     public boolean explode() {
         if(isExp == true){
@@ -104,14 +124,12 @@ public class Projectile{
         return false; 
     }
 
-    /*public int dealDamage(){
-        //work in progress, need to see others stuff to get an idea of how to do this
-    }*/
+
+    }
 
     public void changeXPos(){
         xPos += weapon.calcRange();
-    }
+    }*/
 }
 
 
-    
