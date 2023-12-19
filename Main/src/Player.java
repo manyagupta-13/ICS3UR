@@ -91,7 +91,7 @@ public class Player {
     health = health_;
   }
 
-  //Set top left coordinates of image character
+  //Set top left coordinates of character image
   public void setImageCoordinateY(int y){ 
       yImagePos = y;
   }
@@ -100,8 +100,13 @@ public class Player {
       xImagePos = x;
   }
 
-  public void setWeaponCoordinateY(){
-    yWeaponPos = 
+  //Set top left coordinated or wepon image
+  public void setWeaponCoordinateY(int y){
+    yWeaponPos = y;
+  }
+
+  public void setWeaponCoordinateX(int x){
+    xWeaponPos = x;
   }
 
   //Return character chosen by player
