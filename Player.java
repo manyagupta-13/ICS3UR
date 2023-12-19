@@ -85,11 +85,11 @@ public class Player{
   }
 
   //Set top left coordinates of image character
-  public void setCoordinateY(int y){ 
+  public void setImageCoordinateY(int y){ 
       yPos = y;
   }
 
-  public void setCoordinateX(int x){
+  public void setImageCoordinateX(int x){
         xPos = x;
   }
 
