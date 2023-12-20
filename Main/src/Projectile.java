@@ -19,7 +19,9 @@ public class Projectile{
         weaponType = weaponType_;
         xPos = 300;
         yPos = 300;
-        fireball = new Image();
+        ImageIcon tempIcon = new ImageIcon("");
+        fireball = tempIcon.getImage();
+
     }
 
     public double getDamage() {
