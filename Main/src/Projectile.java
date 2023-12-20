@@ -175,7 +175,7 @@ public class Projectile {
 //    private int canonDamage;
 //    private int wizardDamage;
 //    private int direction;
-//    private Hitbox hitbox;
+//    private Hitbox rectangle = new Hitbox(;
 
 //    //DO NOT KNOW ITS PURPOSE
 //    private int fireDamage;
