@@ -20,7 +20,6 @@ public class Player {
   private final static int height;
   //Objects to determine health and other attributed
   private Weapons weapon;
-  private Projectile projectile;
 
   //Object to determine collision
   private Hitbox hitbox = new Hitbox(getCoordinateX(), getCoordinateY(), getWidth(), getHeight());
