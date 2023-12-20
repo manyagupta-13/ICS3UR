@@ -55,9 +55,14 @@ public class Weapons {
     return yPos;
   }
 
+  public double getTheta() {
+    return theta;
+  }
 
   public void setCoords(int mx, int my) {
-    theta = -Math.atan(my * my / mx / mx);
+    mx -= xPos;
+    my -= yPos;
+    theta = -Math.atan(1.0 * my * my / mx / mx);
     v0 = Math.sqrt(mx * mx + my * my);
     t = (2 * v0 * Math.sin(theta)) / G;
     range = (v0 * v0 * Math.sin(2 * theta)) / G;

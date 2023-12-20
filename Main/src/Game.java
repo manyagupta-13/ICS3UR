@@ -94,7 +94,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
                 mouseXPosDragged = e.getX();
                 mouseYPosDragged = e.getY();
 
-                System.out.println("(" + mouseXPosDragged + ", " + mouseYPosDragged + ")");
+                //System.out.println("(" + mouseXPosDragged + ", " + mouseYPosDragged + ")");
 
 
                 //DrawShortPath
@@ -116,11 +116,18 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
 
     private void drawFirePath(Graphics g) {
+        currentPlayer.setXPos(300);
+        currentPlayer.setYPos(300);
+
+        System.out.println(Math.atan(-15));
+
+        //System.out.println(currentPlayer.getWeapon().getTheta());
         currentPlayer.getWeapon().setCoords(mouseXPosDragged, mouseYPosDragged);
+
         g.drawOval(30, 30, 30, 30);
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
 
-        System.out.println(Arrays.toString(tempProjectedPoints[0]) + ", " + Arrays.toString(tempProjectedPoints[1]));
+        //System.out.println(Arrays.toString(tempProjectedPoints[0]) + ", " + Arrays.toString(tempProjectedPoints[1]));
         int radius = 9;
 
         for(int i = 0; i < 3; i++) {
@@ -141,7 +148,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         if(mouseIsDown) {
             drawFirePath(g);
-            System.out.println("Painted");
+            //System.out.println("Painted");
         }
 //        //Draw Players
 //        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos, this);
