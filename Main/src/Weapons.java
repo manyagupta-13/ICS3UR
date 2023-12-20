@@ -62,7 +62,7 @@ public class Weapons {
   public void setCoords(int mx, int my) {
     mx -= xPos;
     my -= yPos;
-    theta = -Math.atan2(1.0 * my * my,1.0* mx * mx);
+    theta = (-Math.atan2(my, mx) + Math.PI)%(2*Math.PI);
     v0 = Math.sqrt(mx * mx + my * my);
     t = (2 * v0 * Math.sin(theta)) / G;
     range = (v0 * v0 * Math.sin(2 * theta)) / G;
@@ -89,7 +89,7 @@ public class Weapons {
       double temp = (range / 20) * i;
       ret[0][i - 1] = (int) (xPos + temp);
       ret[1][i - 1] = (int) (yPos + temp * Math.tan(theta) - (G * temp * temp / (2 * v0 * v0 * Math.cos(theta) * Math.cos(theta))));
-      ret[2][i - 3] = (int) (180 * Math.atan(Math.tan(theta) - (2 * temp * G) / (2 * v0 * v0 * Math.pow(Math.cos(theta), 2))));
+      ret[2][i - 1] = (int) (180 * Math.atan(Math.tan(theta) - (2 * temp * G) / (2 * v0 * v0 * Math.pow(Math.cos(theta), 2))));
     }
     return ret;
   }
