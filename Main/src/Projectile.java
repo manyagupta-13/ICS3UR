@@ -170,9 +170,13 @@ public class Projectile {
 //
 //    // Attributes
 //    private boolean isExp;
+//    private int xCenterPos;
+//    private int yCenterPos;
+//    projectile String weaponType;
+
+//    //DO NOT KNOW ITS PURPOSE
 //    private int fireDamage;
-//    private int xPos;
-//    private int yPos;
+//    //DO NOT KNOW ITS PURPOSE
 //    private int turnsBurning;
 //
 //
@@ -206,20 +210,9 @@ public class Projectile {
 //        return specEff;
 //    }
 //
-//    public float getExplosionArea() {
-//        return expArea;
-//    }
 //
 //    public boolean getIsExplosive() {
 //        return isExp;
-//    }
-//
-//    public int getFireDamage() {
-//        return fireDamage;
-//    }
-//
-//    public int getTurnsBurning(){
-//        return turnsBurning;
 //    }
 //
 //    // Setter methods
@@ -231,28 +224,15 @@ public class Projectile {
 //        specEff = se;
 //    }
 //
-//    public void setIsExplosive(boolean e) {
-//        isExp = e;
+//    public void setXCenterPos(int x){
+//        xCenterPos = x;
+//     }
+//
+//    public void setWCenterPos(int y){
+//        yCenterPos = y;
 //    }
 //
-//    public void setFireDamage(int fd) {
-//        fireDamage = fd;
-//    }
-//
-//    public void setTurnsBurning(int t){
-//        turnsBurning = t;
-//    }
-//
-//    // Coordinate interface methods
-//    public int getX() {
-//        return xPos;
-//    }
-//
-//    public int getY() {
-//        return yPos;
-//    }
-//
-//    // Additional methods
+//    // ADDITIONAL METHODS
 //    public boolean explode() {
 //        if(isExp == true){
 //            return true; //true can trigger the explosion image to spawn,
@@ -280,6 +260,28 @@ public class Projectile {
 //        xPos += weapon.calcRange();
 //    }
 //}
+//    public void setIsExplosive(boolean e) {
+//        isExp = e;
+//    }
 //
+//    public void setFireDamage(int fd) {
+//        fireDamage = fd;
+//    }
 //
+//    public void setTurnsBurning(int t){
+//        turnsBurning = t;
+//    }
+//    public int getTurnsBurning(){
+//        return turnsBurning;
+//    }
+//    // Coordinate interface methods
+//    public int getX() {
+//        return xPos;
+//    }
 //
+//    public int getY() {
+//        return yPos;
+//    }
+////    public float getExplosionArea() {
+//        return expArea;
+//    }
