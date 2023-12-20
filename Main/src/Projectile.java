@@ -172,27 +172,14 @@ public class Projectile {
 //    private boolean isExp;
 //    private int xCenterPos;
 //    private int yCenterPos;
-//    projectile String weaponType;
+//    private int canonDamage;
+//    private int wizardDamage;
+//    private int direction;
+//    private Hitbox hitbox;
 
 //    //DO NOT KNOW ITS PURPOSE
 //    private int fireDamage;
-//    //DO NOT KNOW ITS PURPOSE
 //    private int turnsBurning;
-//
-//
-//    // Default constructor
-//    public Projectile() {
-//        this(false); // Default values for damage and isExp
-//    }
-//
-//    // Constructor with damage and special effect
-//    public Projectile(boolean isExp) {
-//        isExp = isExp;
-//        fireDamage = 1; // Default value for fire damage
-//        xPos = getXPos(); // Default value for X position
-//        yPos = getYPos(); // Default value for Y position
-//        turnsBurning = 0; //Default value for turns to burn
-//    }
 //
 //    // Constructor with damage, special effect, and initial position
 //    public Projectile(boolean isExp, int xPos, int yPos) {
@@ -202,22 +189,30 @@ public class Projectile {
 //    }
 //
 //    // Getter methods
-//    public double getDamage() {
-//        return weapons.calcDamage();
+//    public int getCanonDamage() {
+//        return canonDamage;
+//    }
+
+//    public int getWizardDamage(){
+//        return wizardDamage;
 //    }
 //
 //    public String getSpecEff() {
 //        return specEff;
 //    }
 //
-//
 //    public boolean getIsExplosive() {
 //        return isExp;
 //    }
 //
+//    public int getDirection(){
+//        return direction;
+//    }
+
 //    // Setter methods
 //    public void setDamage(int d) {
-//        damage = d;
+//        canonDamge = 10;
+//        wizardDamage = 15;
 //    }
 //
 //    public void setSpecEff(String se) {
@@ -232,6 +227,11 @@ public class Projectile {
 //        yCenterPos = y;
 //    }
 //
+//    public void setDirection(int d){
+//        damage = d;
+//    }
+
+
 //    // ADDITIONAL METHODS
 //    public boolean explode() {
 //        if(isExp == true){
