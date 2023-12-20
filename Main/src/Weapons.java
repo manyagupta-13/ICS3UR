@@ -9,7 +9,7 @@ public class Weapons {
   // private int power; //base power
   private double speedMod; // speed modifier
   private Image displayImg;
-  private Projectile proj;
+  //private Projectile proj;
   // TODO: scale mx,my to fit screen
   private double v0, theta, t, range;
   private int xPos, yPos;
