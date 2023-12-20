@@ -8,21 +8,27 @@ import java.awt.image.BufferedImage;
 public class Game extends JFrame implements MouseMotionListener, MouseListener {
     //GUI Related Instance Variables
     private JPanel gamePanel;
-    private JProgressBar progressBar1;
-    private JProgressBar progressBar2;
+    private JProgressBar p1HealthBar;
+    private JProgressBar p2HealthBar;
     private JLabel player1HealthLabel;
     private JLabel player2HealthLabel;
     private JPanel gameFieldPanel;
 
+    //Gameplay affecting variables
     private final int mapSelection;
+
+
     private BufferedImage gameFieldVisuals;
 
-    //private final Player player1;
-    //private final Player player2;
+    private final Player player1;
+    private final Player player2;
     int currentTurn = 0;
 
     private int mouseXPosDragged;
     private int mouseYPosDragged;
+    private boolean mouseIsDown;
+
+
 
     public Game(String player1Character, String player2Character, int mapSelection_) {
         mapSelection = mapSelection_;
@@ -32,7 +38,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         //Set Starting Positions and Content Panel
         setContentPane(gamePanel);
-        setTitle("Battlistas");
+        setTitle("[GAME NAME]");
 
         //Define Panel Attributes
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -40,47 +46,102 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         setLocationRelativeTo(null);
         setVisible(true);
 
+        //Define Player Objects
+        //TODO: Define Player Start Coordinates here!
+        int[] playerStartCoords = new int[] {300, 300, 1100, 300};
+        player1 = new Player(player1Character, playerStartCoords[0], playerStartCoords[1]);
+        player2 = new Player(player2Character, playerStartCoords[2], playerStartCoords[3]);
+        System.out.println(player1.getXPos() + ", " + player1.getYPos());
+        System.out.println(player1.getXPos()+player1.getWidth());
+
+        //DefineHealthBarDisplay
+        p1HealthBar.setValue(100);
+        p2HealthBar.setValue(100);
+
+        //MouseListener
+        addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                System.out.println("BANG!");
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
 
 
-        /*TODO: Ensure connectivity to player objects
-        Code dependencies to be integrated:
+        addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                //TODO: (Manya + Jimmy) Feed mouse dragged position to weapon object through player
+                //Feed coordinates to weapon via e.getY() and e.getX()
+                //See https://www.javatpoint.com/java-mousemotionlistener for more details
+                mouseXPosDragged = e.getX();
+                mouseYPosDragged = e.getY();
 
-        player1 = new Player(player1Character, );
-        player2 = new Player(player2Character, );
+                System.out.println("(" + mouseXPosDragged + ", " + mouseYPosDragged + ")");
 
-         */
+                switch (currentTurn) {
+                    case 0 -> {
+                        //drawFirePath(player1);
+                    }
+                    //player1.weapon.setCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
+                    case 1 -> {
+                        //drawFirePath(player2);
+                    }
+                    //player2.weapon.setCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
+                }
+                repaint();
+            }
 
+            @Override
+            public void mouseMoved(MouseEvent e) {}
+        });
+
+        repaint();
+        //TODO: Ensure connectivity to player objects
+    }
+
+    public static void weaponFire(Player player){
+        //Get path from player's weapon
 
     }
 
-    //public static void weaponFired(Player player){
-        //Get path from player's weapon
-    //}
+
+    public static void drawFirePath(Player player, Graphics g) {
+
+    }
 
     //Paint
     //TODO: (Kale) Try to resolve flickering through double-buffering by rendering in gameFieldPanel only
     @Override
     public void paint(Graphics g) {
         super.paintComponents(g);
-        //Draw Players
-        //g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos, this);
-        //g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos, this);
-
-        //Example code which moves a blue rectangle when mouse is dragged.
-        g.setColor(Color.BLUE);
-        g.fillRect(mouseXPosDragged, mouseYPosDragged, 50, 50);
-
-        switch (mapSelection) {
-            case 0:
-                drawMap1(g);
-                break;
-            case 1:
-                drawMap2(g);
-                break;
-            case 2:
-                drawMap3(g);
-                break;
-        }
+        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos(), this);
+        g.drawImage(player1.getWeapon().getDisplayImg(), player1.getWeapon().getXPos(), player1.getWeapon().getYPos(), this);
+//        //Draw Players
+//        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos, this);
+//        //g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos, this);
+//
+//        //Example code which moves a blue rectangle when mouse is dragged.
+//        g.setColor(Color.BLUE);
+//        g.fillRect(mouseXPosDragged, mouseYPosDragged, 50, 50);
+//
+//        switch (mapSelection) {
+//            case 0 -> drawMap1(g);
+//            case 1 -> drawMap2(g);
+//            case 2 -> drawMap3(g);
+//            case 4 -> testMap(g);
+//        }
     }
 
     public static void main(String[] args) {
@@ -91,6 +152,10 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     //Map Drawings
     //TODO: (Chris) Add Obstacle design in drawMap# Methods
+
+    private void testMap(Graphics g) {
+    }
+
     private void drawMap1(Graphics g) {
         //Example code on drawing a rectangle (You specify xPos and yPos for each rectangle)
         //g.setColor(Color.BLUE);
@@ -109,23 +174,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     //Mouse Input Listener Methods
     @Override
     public void mouseDragged(MouseEvent e) {
-        //TODO: (Manya + Jimmy) Feed mouse dragged position to weapon object through player
-        //Feed coordinates to weapon via e.getY() and e.getX()
-        //See https://www.javatpoint.com/java-mousemotionlistener for more details
-        mouseXPosDragged = e.getX();
-        mouseYPosDragged = e.getY();
 
-        System.out.println("(" + mouseXPosDragged + ", " + mouseYPosDragged + ")");
-
-        switch (currentTurn) {
-            case 0:
-                //player1.weapon.setCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
-                break;
-            case 1:
-                //player2.weapon.setCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
-                break;
-        }
-        repaint();
     }
 
     //mouseMoved method from MouseMotionListener interface - never used
