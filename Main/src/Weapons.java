@@ -62,7 +62,7 @@ public class Weapons {
   public void setCoords(int mx, int my) {
     mx -= xPos;
     my -= yPos;
-    theta = -Math.atan(1.0 * my * my / mx / mx);
+    theta = -Math.atan2(1.0 * my * my,1.0* mx * mx);
     v0 = Math.sqrt(mx * mx + my * my);
     t = (2 * v0 * Math.sin(theta)) / G;
     range = (v0 * v0 * Math.sin(2 * theta)) / G;
