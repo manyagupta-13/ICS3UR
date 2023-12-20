@@ -8,8 +8,8 @@ import java.awt.image.BufferedImage;
 public class Game extends JFrame implements MouseMotionListener, MouseListener {
     //GUI Related Instance Variables
     private JPanel gamePanel;
-    private JProgressBar progressBar1;
-    private JProgressBar progressBar2;
+    private JProgressBar p1HealthBar;
+    private JProgressBar p2HealthBar;
     private JLabel player1HealthLabel;
     private JLabel player2HealthLabel;
     private JPanel gameFieldPanel;
@@ -26,6 +26,9 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     private int mouseXPosDragged;
     private int mouseYPosDragged;
+    private boolean mouseIsDown;
+
+
 
     public Game(String player1Character, String player2Character, int mapSelection_) {
         mapSelection = mapSelection_;
@@ -48,6 +51,12 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         int[] playerStartCoords = new int[] {300, 300, 1100, 300};
         player1 = new Player(player1Character, playerStartCoords[0], playerStartCoords[1]);
         player2 = new Player(player2Character, playerStartCoords[2], playerStartCoords[3]);
+        System.out.println(player1.getXPos() + ", " + player1.getYPos());
+        System.out.println(player1.getXPos()+player1.getWidth());
+
+        //DefineHealthBarDisplay
+        p1HealthBar.setValue(100);
+        p2HealthBar.setValue(100);
 
         //MouseListener
         addMouseListener(new MouseListener() {
@@ -117,20 +126,22 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     @Override
     public void paint(Graphics g) {
         super.paintComponents(g);
-        //Draw Players
-        //g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos, this);
-        //g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos, this);
-
-        //Example code which moves a blue rectangle when mouse is dragged.
-        g.setColor(Color.BLUE);
-        g.fillRect(mouseXPosDragged, mouseYPosDragged, 50, 50);
-
-        switch (mapSelection) {
-            case 0 -> drawMap1(g);
-            case 1 -> drawMap2(g);
-            case 2 -> drawMap3(g);
-            case 4 -> testMap(g);
-        }
+        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos(), this);
+        g.drawImage(player1.getWeapon().getDisplayImg(), player1.getWeapon().getXPos(), player1.getWeapon().getYPos(), this);
+//        //Draw Players
+//        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos, this);
+//        //g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos, this);
+//
+//        //Example code which moves a blue rectangle when mouse is dragged.
+//        g.setColor(Color.BLUE);
+//        g.fillRect(mouseXPosDragged, mouseYPosDragged, 50, 50);
+//
+//        switch (mapSelection) {
+//            case 0 -> drawMap1(g);
+//            case 1 -> drawMap2(g);
+//            case 2 -> drawMap3(g);
+//            case 4 -> testMap(g);
+//        }
     }
 
     public static void main(String[] args) {
@@ -143,9 +154,8 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     //TODO: (Chris) Add Obstacle design in drawMap# Methods
 
     private void testMap(Graphics g) {
-
-
     }
+
     private void drawMap1(Graphics g) {
         //Example code on drawing a rectangle (You specify xPos and yPos for each rectangle)
         //g.setColor(Color.BLUE);

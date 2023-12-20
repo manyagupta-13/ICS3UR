@@ -1,8 +1,9 @@
+import javax.swing.*;
 import java.lang.Math;
 import java.awt.Image;
 
 
-public class Weapons { 
+public class Weapons {
   private final double G=9.81;
   // private double damageMod; //damage modifier
   // private int power; //base power
@@ -11,18 +12,51 @@ public class Weapons {
   private Projectile proj;
   // TODO: scale mx,my to fit screen
   private double v0, theta, t, range;
+  private int xPos, yPos;
+  private int width, height;
 
   // public Weapons(double dmg, int power, double speed, Image img){
-  public Weapons(double speed, Image img){
-    // this.damageMod=dmg;
-    // this.power=power;
-    this.speedMod=speed;
-    this.displayImg=img;
-  }
 
   public Weapons(String weapon){
-
+    xPos = 0;
+    yPos = 0;
+    speedMod = 2;
+    ImageIcon tempIcon = new ImageIcon("C:\\Users\\kalew\\IdeaProjects\\ICS3UR - Group Project Bowmasters\\src\\WizardWeaponStandin.JPG");
+    width = tempIcon.getIconWidth();
+    height = tempIcon.getIconHeight();
+    displayImg = tempIcon.getImage();
   }
+
+  public Image getDisplayImg() {
+    return displayImg;
+  }
+
+  public int getWidth() {
+    return width;
+  }
+
+  public int getHeight() {
+    return height;
+  }
+
+  public void setXPos(int xPos_) {
+    xPos = xPos_;
+  }
+
+  public void setYPos(int yPos_) {
+    yPos = yPos_;
+  }
+
+  public int getXPos() {
+    return xPos;
+  }
+
+  public int getYPos() {
+    return yPos;
+  }
+
+
+
   public void setCoords(int mx, int my){
     theta = -Math.atan(my*my/mx/mx);
     v0=Math.sqrt(mx*mx+my*my);
@@ -35,9 +69,6 @@ public class Weapons {
     return this.speedMod;
   }
 
-  
-
-  
   public double[][] getPathShort(){
     double[][] ret = new double[2][3];
     for (int i = 1; i < 4; i++){
@@ -47,7 +78,7 @@ public class Weapons {
     }
     return ret;
   }
-  
+
   public double[][] getPathFull(){
     double[][] ret = new double[2][20];
     for (int i = 1; i < 21; i++){
