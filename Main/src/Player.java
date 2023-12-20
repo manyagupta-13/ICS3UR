@@ -7,7 +7,6 @@ public class Player {
   private final String character;
   //Player's choice to shoot or move
   private boolean move;
-  private boolean shoot;
   //Player's health
   private int health;
   //Coordinates of top left corner of character image
@@ -72,17 +71,6 @@ public class Player {
     }
     else{
       move = false;
-    }
-  }
-
-  //Return boolean if player decides to shoot
-  public void setShoot(){
-    if(shoot button clicked){
-      shoot = true;
-    
-    }
-    else{
-      shoot = false;
     }
   }
 
