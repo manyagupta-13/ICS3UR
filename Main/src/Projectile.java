@@ -10,11 +10,11 @@ public class Projectile{
     private int yPos;
     private int turnsBurning;
     private int damage;
-    Hitbox hitbox = new Hitbox();
+    Hitbox hitbox = new Hitbox(196, 48, 92, 92);
     private Image fireball = new Image(fireball.png);
     private int direction;
-    private xCenterBall;
-    private yCenterBall;
+    private int xCenterBall = 242;
+    private int yCenterBall = 94;
 
 
     // Default constructor
