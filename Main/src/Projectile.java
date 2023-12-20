@@ -11,7 +11,7 @@ public class Projectile{
     private int turnsBurning;
     private int damage;
     Hitbox hitbox = new Hitbox(196, 48, 92, 92);
-    private Image fireball = new Image(fireball.png);
+    private Image fireball = new Image(src = "https://raw.githubusercontent.com/manyagupta-13/ICS3UR/main/Game%20Resources/fireball%20(2).png");
     private int direction;
     private int xCenterBall = 242;
     private int yCenterBall = 94;
