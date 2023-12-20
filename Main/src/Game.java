@@ -120,6 +120,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     private void weaponFire(Graphics g) throws InterruptedException {
         //Get path from player's weapon
+<<<<<<< Updated upstream
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
         System.out.println("Fired!");
 
@@ -127,10 +128,16 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         for (int i = 0; i < tempProjectedPoints[0].length; i++) {
             System.out.println(tempProjectedPoints[0][i] + ", " + tempProjectedPoints[1][i]);
             g.drawOval(tempProjectedPoints[0][i], tempProjectedPoints[1][i], 10, 10);
+=======
+        int[][] tempProjectedPoints = {};
+        //int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
+
+        for (int i = 0; i < 500; i += 50) {
+>>>>>>> Stashed changes
             //X Value of Projectile tempProjectedPoints[0][i];
             //Y Value of Projectile tempProjectedPoints[1][i];
             //Z Value of Projectile tempProjectedPoints[2][i];
-
+            g.drawOval(currentPlayer.getWeapon().getXPos() + i, currentPlayer.getWeapon().getYPos() - i, 20, 20);
             Thread.sleep(100);
         }
 
