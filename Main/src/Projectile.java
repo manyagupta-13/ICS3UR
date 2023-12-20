@@ -9,7 +9,7 @@ public class Projectile{
     private int yPos;
     private int damage;
     Hitbox hitbox = new Hitbox(196, 48, 92, 92);
-    private Image fireball = new Image();
+    private Image fireball;
     private int direction;
     private int xCenterBall = 242;
     private int yCenterBall = 94;
@@ -19,6 +19,7 @@ public class Projectile{
         weaponType = weaponType_;
         xPos = 300;
         yPos = 300;
+        fireball = new Image();
     }
 
     public double getDamage() {
