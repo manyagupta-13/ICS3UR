@@ -28,6 +28,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     private int mouseXPosDragged;
     private int mouseYPosDragged;
     private boolean mouseIsDown;
+    private boolean mouseReleased;
 
 
 
@@ -75,6 +76,8 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             @Override
             public void mouseReleased(MouseEvent e) {
                 mouseIsDown = false;
+                mouseReleased = true;
+                repaint();
             }
 
             @Override
@@ -109,8 +112,18 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         //TODO: Ensure connectivity to player objects
     }
 
-    public static void weaponFire(Player player){
+    private void weaponFire(Graphics g) throws InterruptedException {
         //Get path from player's weapon
+        int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
+
+        for(int i = 0; i < tempProjectedPoints[0].length; i++) {
+            //X Value of Projectile tempProjectedPoints[0][i];
+            //Y Value of Projectile tempProjectedPoints[1][i];
+            //Z Value of Projectile tempProjectedPoints[2][i];
+
+            Thread.sleep(100);
+        }
+
 
     }
 
@@ -127,11 +140,11 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         g.drawOval(30, 30, 30, 30);
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
 
-        //System.out.println(Arrays.toString(tempProjectedPoints[0]) + ", " + Arrays.toString(tempProjectedPoints[1]));
+        System.out.println(Arrays.toString(tempProjectedPoints[0]) + ", " + Arrays.toString(tempProjectedPoints[1]));
         int radius = 9;
 
         for(int i = 0; i < 3; i++) {
-            g.drawOval(tempProjectedPoints[0][i], tempProjectedPoints[1][i], radius, radius);
+            g.drawOval(tempProjectedPoints[0][i] + currentPlayer.getWeapon().getXPos(), tempProjectedPoints[1][i] + currentPlayer.getWeapon().getYPos(), radius, radius);
             g.setColor(Color.BLUE);
             radius -= 3;
         }
@@ -149,6 +162,13 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         if(mouseIsDown) {
             drawFirePath(g);
             //System.out.println("Painted");
+        } else if(mouseReleased) {
+            try {
+                weaponFire(g);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
         }
 //        //Draw Players
 //        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos, this);
