@@ -31,6 +31,8 @@ public class Weapons {
     return displayImg;
   }
 
+  public double getRange(){return range;}
+
   public int getWidth() {
     return width;
   }
@@ -61,7 +63,7 @@ public class Weapons {
 
   public void setCoords(int mx, int my) {
     mx -= xPos;
-    my -= yPos;
+    my = yPos-my;
     theta = (-Math.atan2(my, mx) + Math.PI)%(2*Math.PI);
     v0 = Math.sqrt(mx * mx + my * my);
     t = (2 * v0 * Math.sin(theta)) / G;
