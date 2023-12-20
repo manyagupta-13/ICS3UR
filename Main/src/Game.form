@@ -16,11 +16,14 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="386e5" class="javax.swing.JProgressBar" binding="progressBar2" default-binding="true">
+          <component id="386e5" class="javax.swing.JProgressBar" binding="p1HealthBar">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <string value=""/>
+              <stringPainted value="false"/>
+            </properties>
           </component>
           <component id="eba75" class="javax.swing.JLabel" binding="player1HealthLabel">
             <constraints>
@@ -40,7 +43,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="c5cf" class="javax.swing.JProgressBar" binding="progressBar1" default-binding="true">
+          <component id="c5cf" class="javax.swing.JProgressBar" binding="p2HealthBar">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
