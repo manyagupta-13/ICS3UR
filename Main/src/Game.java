@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class Game extends JFrame implements MouseMotionListener, MouseListener {
     //GUI Related Instance Variables
@@ -22,7 +23,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     private final Player player1;
     private final Player player2;
-    int currentTurn = 0;
+    private Player currentPlayer;
 
     private int mouseXPosDragged;
     private int mouseYPosDragged;
@@ -51,6 +52,9 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         int[] playerStartCoords = new int[] {300, 300, 1100, 300};
         player1 = new Player(player1Character, playerStartCoords[0], playerStartCoords[1]);
         player2 = new Player(player2Character, playerStartCoords[2], playerStartCoords[3]);
+
+        currentPlayer = player1;
+
         System.out.println(player1.getXPos() + ", " + player1.getYPos());
         System.out.println(player1.getXPos()+player1.getWidth());
 
@@ -64,11 +68,13 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             public void mouseClicked(MouseEvent e) {}
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+                mouseIsDown = true;
+            }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("BANG!");
+                mouseIsDown = false;
             }
 
             @Override
@@ -90,16 +96,8 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
                 System.out.println("(" + mouseXPosDragged + ", " + mouseYPosDragged + ")");
 
-                switch (currentTurn) {
-                    case 0 -> {
-                        //drawFirePath(player1);
-                    }
-                    //player1.weapon.setCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
-                    case 1 -> {
-                        //drawFirePath(player2);
-                    }
-                    //player2.weapon.setCoords(mouseXPosDragged, mouseYPosDragged); (Just Stand-in Example Code)
-                }
+
+                //DrawShortPath
                 repaint();
             }
 
@@ -117,17 +115,34 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     }
 
 
-    public static void drawFirePath(Player player, Graphics g) {
+    private void drawFirePath(Graphics g) {
+        currentPlayer.getWeapon().setCoords(mouseXPosDragged, mouseYPosDragged);
+        g.drawOval(30, 30, 30, 30);
+        int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
 
+        System.out.println(Arrays.toString(tempProjectedPoints[0]) + ", " + Arrays.toString(tempProjectedPoints[1]));
+        int radius = 9;
+
+        for(int i = 0; i < 3; i++) {
+            g.drawOval(tempProjectedPoints[0][i], tempProjectedPoints[1][i], radius, radius);
+            g.setColor(Color.BLUE);
+            radius -= 3;
+        }
     }
 
     //Paint
     //TODO: (Kale) Try to resolve flickering through double-buffering by rendering in gameFieldPanel only
     @Override
     public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
         super.paintComponents(g);
         g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos(), this);
         g.drawImage(player1.getWeapon().getDisplayImg(), player1.getWeapon().getXPos(), player1.getWeapon().getYPos(), this);
+
+        if(mouseIsDown) {
+            drawFirePath(g);
+            System.out.println("Painted");
+        }
 //        //Draw Players
 //        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos, this);
 //        //g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos, this);
