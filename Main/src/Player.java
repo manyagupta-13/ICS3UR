@@ -47,12 +47,14 @@ public class Player{
 
     public void setYPos(int y){
         yPos = y;
-        weapon.setYPos(y+weapon.getHeight());
+        //weapon.setYPos(y+weapon.getHeight());
+        weapon.setYPos(y);
     }
 
     public void setXPos(int x){
         xPos = x;
-        weapon.setXPos(x+(width)/2-(weapon.getWidth()/2));
+        //weapon.setXPos(x+(width)/2-(weapon.getWidth()/2));
+        weapon.setXPos(x);
     }
 
     public int getYPos(){

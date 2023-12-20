@@ -136,10 +136,11 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         currentPlayer.setYPos(300);
 
         System.out.println(currentPlayer.getWeapon().getTheta() * 180 / Math.PI);
-        System.out.println(currentPlayer.getWeapon().getRange());
+//        System.out.println(currentPlayer.getWeapon().getRange());
 
         //System.out.println(currentPlayer.getWeapon().getTheta());
         currentPlayer.getWeapon().setCoords(mouseXPosDragged, mouseYPosDragged);
+        System.out.println("Mouse Coords: " + mouseXPosDragged + ", " + mouseYPosDragged);
 
         g.drawOval(30, 30, 30, 30);
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
@@ -299,5 +300,4 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     public JComponent $$$getRootComponent$$$() {
         return gamePanel;
     }
-
 }
