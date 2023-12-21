@@ -1,140 +1,109 @@
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
-public class Player{
-  private String character;
+public class Player {
+    private String character;
 
-  private int health;
-  private static Weapons weapon = null;
+    private int health;
+    private static Weapons weapons = null;
 
-  private final int width;
-  private final int height;
-  private int xPos;
-  private int yPos;
-<<<<<<< Updated upstream
-
-  //private Hitbox hitbox;
-=======
-  //Width and height of character image
-  private final int width;
-  private final int height;
-  //Objects to determine health and other attributed
-  private Weapons weapon;
+    private int width = 0;
+    private int height = 0;
+    private int xPos;
+    private int yPos;
 
 
-  //Object to determine collision
-  private Hitbox hitbox = new Hitbox(getXPos(), getYPos(), getWidth(), getHeight());
->>>>>>> Stashed changes
+    //Object to determine collision
+    private Hitbox hitbox = new Hitbox(getXPos(), getYPos(), getWidth(), getHeight());
 
-  //Image for Player GUI Representation
-  private final Image playerImage;
+    //Image for Player GUI Representation
+    private Image playerImage = null;
 
-  public Player(String character_, int startingXPos,  int startingYPos){
-<<<<<<< Updated upstream
-    //Image Path variables (to be deleted later - currently implemented for testing)
-    String wizardImagePath = "C:\\Users\\kalew\\IdeaProjects\\ICS3UR - Group Project Bowmasters\\src\\WizardStandIn.JPG";
-=======
-    int width1;
-    int height1;
-    //TODO: Get image paths for positioning
-    String wizardImagePath = "";
->>>>>>> Stashed changes
-    String cannonImagePath = "";
+    public Player(String character_, int startingXPos, int startingYPos) {
 
-    health = 75;
-    weapon = new Weapons("cannon");
-    System.out.println(weapon.getXPos());
-    ImageIcon playerIcon = new ImageIcon(wizardImagePath);
-    playerImage = playerIcon.getImage();
+        //TODO: Get image paths for positioning
+        //Starting Coordinates
 
-    //Starting Coordinates
-    setXPos(startingXPos);
-    setYPos(startingYPos);
+        //Character Dependent Starting Conditions
+        character = character_;
+        switch (character_) {
+            case "wizard" -> {
+                health = 75;
+                weapons = new Weapons("wizard");
 
-<<<<<<< Updated upstream
-    width = playerIcon.getIconWidth();
-    height = playerIcon.getIconHeight();
+                //Load player Image
+                String wizardImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\finalWizard.png";
+                ImageIcon playerIcon = new ImageIcon(wizardImagePath);
+                playerImage = playerIcon.getImage();
+                width = playerIcon.getIconWidth();
+                height = playerIcon.getIconHeight();
+            }
+            case "cannon" -> {
+                health = 125;
+                weapons = new Weapons("cannon");
 
-=======
-    width1 = 0;
-    height1 = 0;
+                //loadImage('C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG')
+                ImageIcon playerIcon = new ImageIcon("C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG");
+                playerImage = playerIcon.getImage();
+                width = playerIcon.getIconWidth();
+                height = playerIcon.getIconHeight();
+            }
+        }
+        setXPos(startingXPos);
+        setYPos(startingYPos);
 
-    //Character Dependent Starting Conditions
-    character = character_;
-      switch (character_) {
-          case "wizard" -> {
-              health = 75;
-              //weapon = new Weapons(8);
-
-              //Load player Image
-              ImageIcon playerIcon = new ImageIcon(wizardImagePath);
-              playerImage = playerIcon.getImage();
-              width1 = playerIcon.getIconWidth();
-              height1 = playerIcon.getIconHeight();
-          }
-          case "cannon" -> {
-              health = 125;
-              //weapon = new Weapons(7);
-
-              //loadImage('C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG')
-              ImageIcon playerIcon = new ImageIcon(cannonImagePath);
-              playerImage = playerIcon.getImage();
-              width1 = playerIcon.getIconWidth();
-              height1 = playerIcon.getIconHeight();
-          }
-      }
-    width = width1;
-    height = height1;
->>>>>>> Stashed changes
-  }
+    }
 
 
+    //TODO: Create Shoot method which calls weapon
 
-  //TODO: Create Shoot method which calls weapon
+    public void setHealth(int health_) {
+        health = health_;
+    }
 
-  public void setHealth(int health_){
-    health = health_;
-  }
+    public void setYPos(int y) {
+        yPos = y;
+        weapons.setYPos(y + weapons.getHeight());
+    }
 
-  public void setYPos(int y){
-    yPos = y;
-    weapon.setYPos(y+weapon.getHeight());
-  }
+    public void setXPos(int x) {
+        xPos = x;
+        weapons.setXPos(x + (width) / 2 - (weapons.getWidth() / 2));
+    }
 
-  public void setXPos(int x){
-    xPos = x;
-    weapon.setXPos(x+(width)/2-(weapon.getWidth()/2));
-  }
+    public int getYPos() {
+        return yPos;
+    }
 
-  public int getYPos(){
-    return yPos;
-  }
+    public int getXPos() {
+        return xPos;
+    }
 
-  public int getXPos(){
-    return xPos;
-  }
+    public Weapons getWeapon() {
+        return weapons;
+    }
 
-  public Weapons getWeapon() {
-    return weapon;
-  }
+    public String getCharacter() {
+        return character;
+    }
 
-  public String getCharacter(){
-    return character;
-  }
+    public int getWidth() {
+        return width;
+    }
 
-  public int getWidth() {
-    return width;
-  }
+    public int getHeight() {
+        return height;
+    }
 
-  public int getHeight() {
-    return height;
-  }
+    public int getHealth() {
+        return health;
+    }
 
-  public int getHealth(){
-    return health;
-  }
+    public Image getImage() {
+        return playerImage;
+    }
 
-  public Image getImage() {
-    return playerImage;
-  }
+    public Object getHitbox() {
+        return hitbox;
+    }
 }
