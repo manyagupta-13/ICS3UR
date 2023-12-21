@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.lang.Math;
 import java.awt.Image;
+import java.io.File;
 
 
 public class Weapons {
@@ -17,7 +18,7 @@ public class Weapons {
     xPos = 0;
     yPos = 0;
     speedMod = 2;
-    ImageIcon tempIcon = new ImageIcon("C:\\Users\\kalew\\IdeaProjects\\ICS3UR - Group Project Bowmasters\\src\\WizardWeaponStandin.JPG");
+    ImageIcon tempIcon = new ImageIcon("..\\src\\WizardWeaponStandin.JPG");
     width = tempIcon.getIconWidth();
     height = tempIcon.getIconHeight();
     displayImg = tempIcon.getImage();

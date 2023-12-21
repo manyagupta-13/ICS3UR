@@ -20,7 +20,8 @@ public class Projectile{
         weaponType = weaponType_;
         xPos = 300;
         yPos = 300;
-        ImageIcon tempIcon = new ImageIcon("C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\fireball.png");
+        // D:\learn\workspace\Java\school\groupProject\ICS3UR\.
+        ImageIcon tempIcon = new ImageIcon("..\\Game Resources\\fireball.png");
         projectileImage = tempIcon.getImage();
     }
 

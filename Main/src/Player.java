@@ -19,7 +19,7 @@ public class Player{
 
     public Player(String character_, int startingXPos,  int startingYPos){
         //Image Path variables (to be deleted later - currently implemented for testing)
-        String wizardImagePath = "C:\\Users\\kalew\\IdeaProjects\\ICS3UR - Group Project Bowmasters\\src\\WizardStandIn.JPG";
+        String wizardImagePath = "..\\src\\WizardStandIn.JPG";
         String cannonImagePath = "";
 
         health = 75;
