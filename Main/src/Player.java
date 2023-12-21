@@ -101,4 +101,7 @@ public class Player{
   public Image getImage() {
     return playerImage;
   }
+
+  public Object getHitbox(){
+    return hitbox;
 }
