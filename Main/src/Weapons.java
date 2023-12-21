@@ -64,22 +64,28 @@ public class Weapons {
   }
 
   public void setCoords(int mx, int my) {
+    G=9.81;
     mx -= xPos;
     my = yPos-my;
     theta =-Math.atan2(my, mx)+Math.PI;
+    // System.out.print("anLGE: ");
+    // System.out.println(theta*180/Math.PI);
     mx/=3;
     my/=3;
     v0 = Math.sqrt(mx * mx + my * my);
     t = (2 * v0 * Math.sin(theta)) / G;
     // range = (v0 * v0 * Math.sin(2 * theta)) / G;
-    range=(v0*Math.cos(theta)/G)*
-    (v0*Math.sin(theta)+Math.sqrt(Math.pow(v0*Math.sin(theta), 2)+2*G*h));
-    System.out.print("anLGE: ");
-    System.out.println(theta*180/Math.PI);
     if (theta>Math.PI){
       theta*=-1;
       t=(-v0*Math.sin(theta)+Math.sqrt(Math.pow(v0*Math.sin(theta),2)+400*G))/G;
+      range=(v0*Math.cos(theta)/G)*(v0*Math.sin(theta)+Math.sqrt(Math.pow(v0*Math.sin(theta), 2)+2*G*h));
+      // range*=3;
+      // range=v0*Math.cos(theta)*t;
+    } else {
+      t=(-v0*Math.sin(theta)+Math.sqrt(Math.pow(v0*Math.sin(theta),2)+400*G))/G;
       range=v0*Math.cos(theta)*t;
+      G=-9.81;
+
     }
   }
 
@@ -91,7 +97,7 @@ public class Weapons {
   public int[][] getPathShort() {
     int[][] ret = new int[2][3];
     for (int i = 1; i < 4; i++) {
-      if (theta<0){
+      if (theta<300){
         double temp = (range / 10) * i;
         ret[0][i - 1] = (int) temp;
         ret[1][i - 1] = (int) (temp * Math.tan(theta) - (G * temp * temp / (2 * v0 * v0 * Math.cos(theta) * Math.cos(theta))));
