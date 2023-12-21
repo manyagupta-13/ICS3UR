@@ -37,6 +37,9 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     private int flyingAnimationFrameNum;
     private int currentFrameNum;
 
+    //Animation listener pause
+    private boolean pauseListeners;
+
 
     public Game(String player1Character, String player2Character, int mapSelection_) {
         mapSelection = mapSelection_;
@@ -70,6 +73,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         p2HealthBar.setValue(100);
 
         //MouseListener
+        pauseListeners = false;
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -82,8 +86,10 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                mouseIsDown = false;
-                mouseReleased = true;
+                if (!pauseListeners) {
+                    mouseIsDown = false;
+                    mouseReleased = true;
+                }
                 repaint();
             }
 
@@ -100,18 +106,13 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                //TODO: (Manya + Jimmy) Feed mouse dragged position to weapon object through player
-                //Feed coordinates to weapon via e.getY() and e.getX()
-                //See https://www.javatpoint.com/java-mousemotionlistener for more details
-                mouseXPosDragged = e.getX();
-                mouseYPosDragged = e.getY();
-
-                //System.out.println("(" + mouseXPosDragged + ", " + mouseYPosDragged + ")");
-
-
-                //DrawShortPath
+                if (!pauseListeners) {
+                    mouseXPosDragged = e.getX();
+                    mouseYPosDragged = e.getY();
+                }
                 repaint();
             }
+
 
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -129,6 +130,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         //Get path from player's weapon
         if (currentFrameNum == flyingAnimationFrameNum - 1) {
             //Reset Fire Sequence Variables
+            pauseListeners = false;
             mouseReleased = false;
             currentFrameNum = 0;
         } else {
@@ -156,27 +158,31 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         int radius = 9;
 
-
         for (int i = 0; i < 3; i++) {
-            g.drawOval(tempProjectedPoints[0][i] + currentPlayer.getWeapon().getXPos(), tempProjectedPoints[1][i] + currentPlayer.getWeapon().getYPos(), radius, radius);
             g.setColor(Color.BLUE);
+            g.drawOval(tempProjectedPoints[0][i] + currentPlayer.getWeapon().getXPos(), tempProjectedPoints[1][i] + currentPlayer.getWeapon().getYPos(), radius, radius);
+
             radius -= 3;
         }
     }
 
     //Paint
-    //TODO: (Kale) Try to resolve flickering through double-buffering by rendering in gameFieldPanel only
     @Override
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponents(g);
-        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos(), this);
-        g.drawImage(player1.getWeapon().getDisplayImg(), player1.getWeapon().getXPos(), player1.getWeapon().getYPos(), this);
+
+        Weapons currentWeapon = currentPlayer.getWeapon();
+        g.drawImage(currentPlayer.getImage(), currentPlayer.getXPos(), currentPlayer.getYPos(), this);
+        g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
 
         if (mouseIsDown) {
+            g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
+            //((Graphics2D) g).rotate(currentWeapon.getTheta(), currentWeapon.getXPos() + currentWeapon.getWidth(), currentWeapon.getYPos() + currentWeapon.getHeight());
             drawFirePath(g);
-            //System.out.println("Painted");
+
         } else if (mouseReleased) {
+            pauseListeners = true;
             //Get projected points from current player's weapon
             int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
             flyingAnimationFrameNum = tempProjectedPoints[0].length;
@@ -195,7 +201,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             //g.drawImage(testingProj.getImage(), testingProj.getXPos() + testingProj.getXCenterBall(), testingProj.getYPos() + testingProj.getYCenterBall(), this);
 
             try {
-                Thread.sleep((int) (currentPlayer.getWeapon().getSpeed() * 50));
+                Thread.sleep((int) (50 / currentPlayer.getWeapon().getSpeed()));
                 weaponFire(g);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
