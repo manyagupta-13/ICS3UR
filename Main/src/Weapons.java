@@ -4,7 +4,7 @@ import java.awt.Image;
 
 
 public class Weapons {
-  private final double G = 9.81;
+  private double G = 9.81;
   // private double damageMod; //damage modifier
   // private int power; //base power
   private double speedMod; // speed modifier
@@ -64,11 +64,14 @@ public class Weapons {
   public void setCoords(int mx, int my) {
     mx -= xPos;
     my = yPos-my;
-    System.out.println(mx);
-    System.out.println(my);
-    theta = -Math.atan2(my, mx)+Math.PI/4;
+    theta =-Math.atan2(my, mx)+Math.PI;
+    mx/=3;
+    my/=3;
     v0 = Math.sqrt(mx * mx + my * my);
     t = (2 * v0 * Math.sin(theta)) / G;
+    if (theta>Math.PI){
+      theta*=-1;
+    }
     range = (v0 * v0 * Math.sin(2 * theta)) / G;
   }
 
@@ -83,17 +86,19 @@ public class Weapons {
       double temp = (range / 10) * i;
       ret[0][i - 1] = (int) temp;
       ret[1][i - 1] = (int) (temp * Math.tan(theta) - (G * temp * temp / (2 * v0 * v0 * Math.cos(theta) * Math.cos(theta))));
+      if (theta<-Math.PI){ret[1][i-1]*=-1;}
     }
     return ret;
   }
 
   public int[][] getPathFull() {
-    int[][] ret = new int[3][20];
-    for (int i = 1; i < 21; i++) {
-      double temp = (range / 20) * i;
-      ret[0][i - 1] = (int) (xPos + temp);
-      ret[1][i - 1] = (int) (yPos + temp * Math.tan(theta) - (G * temp * temp / (2 * v0 * v0 * Math.cos(theta) * Math.cos(theta))));
+    int[][] ret = new int[3][40];
+    for (int i = 1; i < 41; i++) {
+      double temp = (range / 40) * i;
+      ret[0][i - 1] = (int) (temp);
+      ret[1][i - 1] = (int) (temp * Math.tan(theta) - (G * temp * temp / (2 * v0 * v0 * Math.cos(theta) * Math.cos(theta))));
       ret[2][i - 1] = (int) (180 * Math.atan(Math.tan(theta) - (2 * temp * G) / (2 * v0 * v0 * Math.pow(Math.cos(theta), 2))));
+      if (theta<-Math.PI){ret[1][i-1]*=-1;}
     }
     return ret;
   }

@@ -20,18 +20,22 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     //Gameplay affecting variables
     private final int mapSelection;
-
-
     private BufferedImage gameFieldVisuals;
 
+    //Player variables
     private final Player player1;
     private final Player player2;
     private Player currentPlayer;
 
+    //Mouse Tracking Instance Variables
     private int mouseXPosDragged;
     private int mouseYPosDragged;
     private boolean mouseIsDown;
     private boolean mouseReleased;
+
+    //Animation Frame Counter
+    private int flyingAnimationFrameNum;
+    private int currentFrameNum;
 
 
     public Game(String player1Character, String player2Character, int mapSelection_) {
@@ -114,34 +118,23 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             }
         });
 
+        //Default Frame Num Values
+        currentFrameNum = 0;
+
         repaint();
         //TODO: Ensure connectivity to player objects
     }
 
     private void weaponFire(Graphics g) throws InterruptedException {
         //Get path from player's weapon
-<<<<<<< Updated upstream
-        int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
-        System.out.println("Fired!");
-
-        //Loop for projectile travel
-        for (int i = 0; i < tempProjectedPoints[0].length; i++) {
-            System.out.println(tempProjectedPoints[0][i] + ", " + tempProjectedPoints[1][i]);
-            g.drawOval(tempProjectedPoints[0][i], tempProjectedPoints[1][i], 10, 10);
-=======
-        int[][] tempProjectedPoints = {};
-        //int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
-
-        for (int i = 0; i < 500; i += 50) {
->>>>>>> Stashed changes
-            //X Value of Projectile tempProjectedPoints[0][i];
-            //Y Value of Projectile tempProjectedPoints[1][i];
-            //Z Value of Projectile tempProjectedPoints[2][i];
-            g.drawOval(currentPlayer.getWeapon().getXPos() + i, currentPlayer.getWeapon().getYPos() - i, 20, 20);
-            Thread.sleep(100);
+        if (currentFrameNum == flyingAnimationFrameNum - 1) {
+            //Reset Fire Sequence Variables
+            mouseReleased = false;
+            currentFrameNum = 0;
+        } else {
+            currentFrameNum++;
+            repaint();
         }
-
-
     }
 
 
@@ -149,18 +142,20 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         currentPlayer.setXPos(300);
         currentPlayer.setYPos(300);
 
-        System.out.println(currentPlayer.getWeapon().getTheta() * 180 / Math.PI);
-//        System.out.println(currentPlayer.getWeapon().getRange());
-
-        //System.out.println(currentPlayer.getWeapon().getTheta());
         currentPlayer.getWeapon().setCoords(mouseXPosDragged, mouseYPosDragged);
         System.out.println("Mouse Coords: " + mouseXPosDragged + ", " + mouseYPosDragged);
 
         g.drawOval(30, 30, 30, 30);
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
+        int[][] testingLongList = currentPlayer.getWeapon().getPathFull();
 
-        System.out.println(Arrays.toString(tempProjectedPoints[0]) + ", " + Arrays.toString(tempProjectedPoints[1]));
+        System.out.println("XPos on short list: " + tempProjectedPoints[0][0]);
+        System.out.println("XPos on long list: " + testingLongList[0][0]);
+//        System.out.println(Arrays.toString(tempProjectedPoints[0]) + ", " + Arrays.toString(tempProjectedPoints[1]));
+//        System.out.println(Arrays.toString(testingLongList[0]) + ", " + Arrays.toString(testingLongList[1]));
+
         int radius = 9;
+
 
         for (int i = 0; i < 3; i++) {
             g.drawOval(tempProjectedPoints[0][i] + currentPlayer.getWeapon().getXPos(), tempProjectedPoints[1][i] + currentPlayer.getWeapon().getYPos(), radius, radius);
@@ -182,27 +177,30 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             drawFirePath(g);
             //System.out.println("Painted");
         } else if (mouseReleased) {
+            //Get projected points from current player's weapon
+            int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
+            flyingAnimationFrameNum = tempProjectedPoints[0].length;
+            Projectile testingProj = new Projectile(0, currentPlayer.getWeapon().getXPos(), currentPlayer.getWeapon().getXPos());
+
+            int currentProjectileXPos = tempProjectedPoints[0][currentFrameNum] + currentPlayer.getWeapon().getXPos();
+            int currentProjectileYPos = tempProjectedPoints[1][currentFrameNum] + currentPlayer.getWeapon().getYPos();
+
+            System.out.println(currentProjectileXPos + ", " + currentProjectileYPos);
+            System.out.println("Frame Number: " + currentFrameNum);
+
+            g.drawOval(currentProjectileXPos, currentProjectileYPos, 10, 10);
+            g.drawOval(100 + 5 * currentFrameNum, 100 + 5 * currentFrameNum, 10, 10);
+            testingProj.setXPos(currentProjectileXPos);
+            testingProj.setYPos(currentProjectileYPos);
+            //g.drawImage(testingProj.getImage(), testingProj.getXPos() + testingProj.getXCenterBall(), testingProj.getYPos() + testingProj.getYCenterBall(), this);
+
             try {
+                Thread.sleep((int) (currentPlayer.getWeapon().getSpeed() * 50));
                 weaponFire(g);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
         }
-//        //Draw Players
-//        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos, this);
-//        //g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos, this);
-//
-//        //Example code which moves a blue rectangle when mouse is dragged.
-//        g.setColor(Color.BLUE);
-//        g.fillRect(mouseXPosDragged, mouseYPosDragged, 50, 50);
-//
-//        switch (mapSelection) {
-//            case 0 -> drawMap1(g);
-//            case 1 -> drawMap2(g);
-//            case 2 -> drawMap3(g);
-//            case 4 -> testMap(g);
-//        }
     }
 
     public static void main(String[] args) {
@@ -210,6 +208,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             new Game("wizard", "ballista", 0);
         });
     }
+
 
     //Map Drawings
     //TODO: (Chris) Add Obstacle design in drawMap# Methods
@@ -267,6 +266,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer
