@@ -68,4 +68,9 @@ public class Projectile{
     public Image getImage() {
         return projectileImage;
     }
+
+    public Hitbox getHitbox() {
+        return hitbox;
+
+    }
 }

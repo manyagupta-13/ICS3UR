@@ -27,6 +27,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     private final Player player1;
     private final Player player2;
     private Player currentPlayer;
+    private Player inActivePlayer;
 
     //Mouse Tracking Instance Variables
     private int mouseXPosDragged;
@@ -50,7 +51,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         //Set Starting Positions and Content Panel
         setContentPane(gamePanel);
-        setTitle("[GAME NAME]");
+        setTitle("Wizard Battle!");
 
         //Define Panel Attributes
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -61,20 +62,26 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         //Define Player Objects
         //TODO: Define Player Start Coordinates here!
         int[] playerStartCoords = new int[]{300, 300, 1100, 300};
-        player1 = new Player(player1Character, playerStartCoords[0], playerStartCoords[1]);
-        player2 = new Player(player2Character, playerStartCoords[2], playerStartCoords[3]);
+        player1 = new Player(player1Character, 300, 300);
+        player2 = new Player(player2Character, 1100, 300);
 
         currentPlayer = player1;
+        inActivePlayer = player2;
 
-        //System.out.println(player1.getXPos() + ", " + player1.getYPos());
-        //System.out.println(player1.getXPos() + player1.getWidth());
+        System.out.println(player1.getXPos());
+        System.out.println(player1.getWeapon().getXPos() + ", " + player1.getWeapon().getYPos());
+        System.out.println(player2.getWeapon().getXPos() + ", " + player2.getWeapon().getYPos());
+
 
         //DefineHealthBarDisplay
-        p1HealthBar.setValue(100);
-        p2HealthBar.setValue(100);
+        p1HealthBar.setMaximum(100);
+        p2HealthBar.setMaximum(100);
+        p1HealthBar.setValue(player1.getHealth());
+        p2HealthBar.setValue(player2.getHealth());
 
         //MouseListener
         pauseListeners = false;
+
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -105,7 +112,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             }
         });
 
-
         addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -115,7 +121,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
                 }
                 repaint();
             }
-
 
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -136,21 +141,27 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             pauseListeners = false;
             mouseReleased = false;
             currentFrameNum = 0;
+
+            //Switch Current Player
+            if (currentPlayer == player1) {
+                currentPlayer = player2;
+                inActivePlayer = player1;
+            } else {
+                currentPlayer = player1;
+                inActivePlayer = player2;
+            }
+
+            System.out.println("Current Turn: " + currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
         } else {
             currentFrameNum++;
             repaint();
         }
     }
 
-
+    //Method for drawing the fire path preview
     private void drawFirePath(Graphics g) {
-        currentPlayer.setXPos(300);
-        currentPlayer.setYPos(300);
-
         currentPlayer.getWeapon().setCoords(mouseXPosDragged, mouseYPosDragged);
-        //System.out.println("Mouse Coords: " + mouseXPosDragged + ", " + mouseYPosDragged);
-
-        g.drawOval(30, 30, 30, 30);
+        System.out.println(currentPlayer.getWeapon().getXPos());
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
         int[][] testingLongList = currentPlayer.getWeapon().getPathFull();
 
@@ -171,9 +182,13 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         Weapons currentWeapon = currentPlayer.getWeapon();
 
-        g.drawImage(currentPlayer.getImage(), currentPlayer.getXPos(), currentPlayer.getYPos(), this);
-        System.out.println(currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
+        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos(), this);
+        g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos(), this);
         //g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
+
+        //Update Player Health
+        p1HealthBar.setValue(player1.getHealth());
+        p2HealthBar.setValue(player2.getHealth());
 
         if (mouseIsDown) {
             drawFirePath(g);
@@ -183,16 +198,39 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             //Get projected points from current player's weapon
             int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
             flyingAnimationFrameNum = tempProjectedPoints[0].length;
-            Projectile testingProj = new Projectile(0, currentPlayer.getWeapon().getXPos(), currentPlayer.getWeapon().getXPos());
 
             int currentProjectileXPos = tempProjectedPoints[0][currentFrameNum] + currentPlayer.getWeapon().getXPos();
             int currentProjectileYPos = tempProjectedPoints[1][currentFrameNum] + currentPlayer.getWeapon().getYPos();
 
-
-            g.drawOval(currentProjectileXPos, currentProjectileYPos, 10, 10);
-            testingProj.setXPos(currentProjectileXPos);
-            testingProj.setYPos(currentProjectileYPos);
+            //TODO: Change Oval Projectile into Projectile Object
+            int ovalDia = 10;
+            g.drawOval(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
+            Hitbox ovalHitbox = new Hitbox(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
+            g.drawRect(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
+            g.drawRect(player1.getHitbox().getXPos(), player1.getHitbox().getYPos(), player1.getWidth(), player1.getHeight());
+            g.drawRect(player2.getHitbox().getXPos(), player2.getHitbox().getYPos(), player2.getWidth(), player2.getHeight());
+            //Projectile testingProj = new Projectile(0, currentPlayer.getWeapon().getXPos(), currentPlayer.getWeapon().getXPos());
+            //testingProj.setXPos(currentProjectileXPos);
+            //testingProj.setYPos(currentProjectileYPos);
             //g.drawImage(testingProj.getImage(), testingProj.getXPos() + testingProj.getXCenterBall(), testingProj.getYPos() + testingProj.getYCenterBall(), this);
+
+            if (ovalHitbox.intersects(inActivePlayer.getHitbox())) {
+                inActivePlayer.setHealth(inActivePlayer.getHealth() - 20);
+                if (currentPlayer == player2) {
+                    p1HealthBar.setValue(player1.getHealth());
+                } else {
+                    p2HealthBar.setValue(player2.getHealth());
+                }
+
+                if (player1.getHealth() <= 0) {
+                    new GameOver("Player 2");
+                    setVisible(false);
+
+                } else if (player2.getHealth() <= 0) {
+                    new GameOver("Player 1");
+                    setVisible(false);
+                }
+            }
 
             try {
                 Thread.sleep((int) (50 / currentPlayer.getWeapon().getSpeed()));
@@ -203,23 +241,15 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new Game("wizard", "ballista", 0);
-        });
-    }
 
-
-    //Map Drawings
-    //TODO: (Chris) Add Obstacle design in drawMap# Methods
 
     private void testMap(Graphics g) {
     }
 
     private void drawMap1(Graphics g) {
-        //Example code on drawing a rectangle (You specify xPos and yPos for each rectangle)
-        //g.setColor(Color.BLUE);
-        //g.fillRect(xPos, yPos, 50, 50)
+        ImageIcon background1ImgIcon = new ImageIcon("C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Field1Final.png");
+
+
     }
 
     private void drawMap2(Graphics g) {

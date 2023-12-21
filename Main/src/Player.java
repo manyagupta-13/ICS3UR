@@ -5,7 +5,7 @@ public class Player {
     private String character;
 
     private int health;
-    private static Weapons weapons = null;
+    private Weapons weapon;
 
     private int width = 0;
     private int height = 0;
@@ -14,7 +14,7 @@ public class Player {
 
 
     //Object to determine collision
-    private Hitbox hitbox = new Hitbox(getXPos(), getYPos(), getWidth(), getHeight());
+    private Hitbox hitbox;
 
     //Image for Player GUI Representation
     private Image playerImage = null;
@@ -28,8 +28,8 @@ public class Player {
         character = character_;
         switch (character_) {
             case "wizard" -> {
-                health = 75;
-                weapons = new Weapons("wizard");
+                health = 100;
+                weapon = new Weapons("wizard");
 
                 //Load player Image
                 String wizardImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\finalWizard.png";
@@ -37,10 +37,12 @@ public class Player {
                 playerImage = playerIcon.getImage();
                 width = playerIcon.getIconWidth();
                 height = playerIcon.getIconHeight();
+
+
             }
             case "cannon" -> {
-                health = 125;
-                weapons = new Weapons("cannon");
+                health = 100;
+                weapon = new Weapons("cannon");
 
                 //loadImage('C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG')
                 ImageIcon playerIcon = new ImageIcon("C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Character.JPG");
@@ -49,8 +51,13 @@ public class Player {
                 height = playerIcon.getIconHeight();
             }
         }
+
+
         setXPos(startingXPos);
         setYPos(startingYPos);
+
+        //Set Hitbox
+        hitbox = new Hitbox(xPos, yPos, getWidth(), getHeight());
 
     }
 
@@ -63,12 +70,12 @@ public class Player {
 
     public void setYPos(int y) {
         yPos = y;
-        weapons.setYPos(y + weapons.getHeight());
+        weapon.setYPos(y + weapon.getHeight());
     }
 
     public void setXPos(int x) {
         xPos = x;
-        weapons.setXPos(x + (width) / 2 - (weapons.getWidth() / 2));
+        weapon.setXPos(x + (width) / 2 - (weapon.getWidth() / 2));
     }
 
     public int getYPos() {
@@ -80,7 +87,7 @@ public class Player {
     }
 
     public Weapons getWeapon() {
-        return weapons;
+        return weapon;
     }
 
     public String getCharacter() {
@@ -103,7 +110,7 @@ public class Player {
         return playerImage;
     }
 
-    public Object getHitbox() {
+    public Hitbox getHitbox() {
         return hitbox;
     }
 }
