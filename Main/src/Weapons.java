@@ -95,8 +95,6 @@ public class Weapons {
   
   public int[][] getPathFull() {
     int[][] ret = new int[3][40];
-    System.out.print("RNAGE: ");
-    System.out.println(range);
     
     for (int i = 1; i < 41; i++) {
       double temp = (range / 40.0) * i;
