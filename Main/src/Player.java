@@ -40,6 +40,18 @@ public class Player {
 
 
             }
+            case "wizard1" -> {
+                health = 100;
+                weapon = new Weapons("wizard");
+
+                //Load player Image
+                String wizardImagePath = "C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\finalWizardFlipped.png";
+                ImageIcon playerIcon = new ImageIcon(wizardImagePath);
+                playerImage = playerIcon.getImage();
+                width = playerIcon.getIconWidth();
+                height = playerIcon.getIconHeight();
+
+            }
             case "cannon" -> {
                 health = 100;
                 weapon = new Weapons("cannon");

@@ -98,7 +98,7 @@ public class MainMenu extends JFrame {
                     //new Game(p1CharChoice, p2CharChoice, mapSelectionComboBox.getSelectedIndex());
 
                     //Unfinished: Only Wizard Option is Available
-                    new Game("wizard", "wizard", mapSelectionComboBox.getSelectedIndex());
+                    new Game("wizard1", "wizard", mapSelectionComboBox.getSelectedIndex());
                     setVisible(false);
                 }
 
@@ -131,7 +131,7 @@ public class MainMenu extends JFrame {
         mainMenu.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         parentPanel.add(mainMenu, "Card1");
         final JLabel label1 = new JLabel();
-        label1.setText("MainMenu Menu");
+        label1.setText("Welcome to Wizard Battle");
         mainMenu.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 30), null, 0, false));
         playButton = new JButton();
         playButton.setLabel("Play");

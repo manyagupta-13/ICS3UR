@@ -29,7 +29,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="MainMenu Menu"/>
+                  <text value="Welcome to Wizard Battle"/>
                 </properties>
               </component>
               <component id="71943" class="javax.swing.JButton" binding="playButton" default-binding="true">

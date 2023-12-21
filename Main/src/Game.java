@@ -182,6 +182,10 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         Weapons currentWeapon = currentPlayer.getWeapon();
 
+        //Draw Floor
+        g.drawRect(0, player1.getYPos() + player1.getHeight(), 1400, 400);
+        Hitbox groundHitbox = new Hitbox(0, player1.getYPos() + player1.getHeight(), 1400, 400);
+
         g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos(), this);
         g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos(), this);
         //g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
@@ -199,6 +203,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
             flyingAnimationFrameNum = tempProjectedPoints[0].length;
 
+            //Get current projectile position
             int currentProjectileXPos = tempProjectedPoints[0][currentFrameNum] + currentPlayer.getWeapon().getXPos();
             int currentProjectileYPos = tempProjectedPoints[1][currentFrameNum] + currentPlayer.getWeapon().getYPos();
 
@@ -206,14 +211,11 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             int ovalDia = 10;
             g.drawOval(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
             Hitbox ovalHitbox = new Hitbox(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
-            g.drawRect(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
-            g.drawRect(player1.getHitbox().getXPos(), player1.getHitbox().getYPos(), player1.getWidth(), player1.getHeight());
-            g.drawRect(player2.getHitbox().getXPos(), player2.getHitbox().getYPos(), player2.getWidth(), player2.getHeight());
-            //Projectile testingProj = new Projectile(0, currentPlayer.getWeapon().getXPos(), currentPlayer.getWeapon().getXPos());
-            //testingProj.setXPos(currentProjectileXPos);
-            //testingProj.setYPos(currentProjectileYPos);
-            //g.drawImage(testingProj.getImage(), testingProj.getXPos() + testingProj.getXCenterBall(), testingProj.getYPos() + testingProj.getYCenterBall(), this);
+            if (ovalHitbox.intersects(groundHitbox)) {
+                currentFrameNum = flyingAnimationFrameNum - 1;
+            }
 
+            //Collision Detection
             if (ovalHitbox.intersects(inActivePlayer.getHitbox())) {
                 inActivePlayer.setHealth(inActivePlayer.getHealth() - 20);
                 if (currentPlayer == player2) {
@@ -232,6 +234,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
                 }
             }
 
+            //Pause and recursion
             try {
                 Thread.sleep((int) (50 / currentPlayer.getWeapon().getSpeed()));
                 weaponFire(g);
@@ -240,7 +243,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             }
         }
     }
-
 
 
     private void testMap(Graphics g) {
