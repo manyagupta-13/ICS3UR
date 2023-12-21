@@ -1,8 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Game extends JFrame{
+public class Background extends JFrame{
 
+    //Size of the screen
+    private final int ResolWidth = 1400;
+    private final int ResolHeight = 500;
+    //Coordinates for map 1
     private int hitboxPlayer1x = 50;  
     private int hitboxPlayer1y = 345;
     private int hitboxPlayer1W = 295;
@@ -20,27 +24,26 @@ public class Game extends JFrame{
     private int GroundW = 1400;
     private int GroundL = 108;
 
-    public Game() {
-        ImageIcon fieldImage = new ImageIcon("C:/users/lidan/OneDrive/Documents/NetBeansProjects/Battlistas/src/battlistas/pp/Field1Final.png");
-        Image gamefield = fieldImage.getImage();
-        int ResolWidth = 1400;
-        int ResolHeight = 500;
-        Image FieldResolution = gamefield.getScaledInstance(ResolWidth, ResolHeight, Image.SCALE_SMOOTH);
+    public Game(int map) {
+        switch (map){
+            case 1 -> {
+                ImageIcon fieldImage = new ImageIcon("C:/users/lidan/OneDrive/Documents/NetBeansProjects/Battlistas/src/battlistas/pp/Field1Final.png");
+                Image gamefield = fieldImage.getImage();
+                Image FieldResolution = gamefield.getScaledInstance(ResolWidth, ResolHeight, Image.SCALE_SMOOTH);
         
-        
-        
-        JLabel jlabel = new JLabel(new ImageIcon(FieldResolution));
-        add(jlabel);
-        setSize(ResolWidth, ResolHeight);
-        setLocationRelativeTo(null);
-        Panel Panel1 = new Panel();
-        setContentPane(Panel1);
-   
+                JLabel jlabel = new JLabel(new ImageIcon(FieldResolution));
+                add(jlabel);
+                setSize(ResolWidth, ResolHeight);
+                setLocationRelativeTo(null);
+                Panel Panel1 = new Panel();
+                setContentPane(Panel1);
+
+            }
+            case 2 
     }
 
  
 
-    @Override
     public void paint(Graphics g) {
         super.paint(g);
         g.setColor(Color.RED);
