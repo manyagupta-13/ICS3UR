@@ -92,9 +92,9 @@ public class Weapons {
   }
   
   public int[][] getPathFull() {
-    int[][] ret = new int[3][20];
-    for (int i = 1; i < 21; i++) {
-      double temp = (range / 20) * i;
+    int[][] ret = new int[3][40];
+    for (int i = 1; i < 41; i++) {
+      double temp = (range / 40) * i;
       ret[0][i - 1] = (int) (xPos + temp);
       ret[1][i - 1] = (int) (yPos + temp * Math.tan(theta) - (G * temp * temp / (2 * v0 * v0 * Math.cos(theta) * Math.cos(theta))));
       ret[2][i - 1] = (int) (180 * Math.atan(Math.tan(theta) - (2 * temp * G) / (2 * v0 * v0 * Math.pow(Math.cos(theta), 2))));
