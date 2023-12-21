@@ -18,7 +18,7 @@ public class Weapons {
     xPos = 0;
     yPos = 0;
     speedMod = 2;
-    projectile = new Projectile(0, )
+    projectile = new Projectile(0, xPos, yPos);
     ImageIcon tempIcon = new ImageIcon("C:\\Users\\kalew\\IdeaProjects\\ICS3UR - Group Project Bowmasters\\src\\WizardWeaponStandin.JPG");
     width = tempIcon.getIconWidth();
     height = tempIcon.getIconHeight();

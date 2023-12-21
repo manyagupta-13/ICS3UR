@@ -61,20 +61,24 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         //Define Player Objects
         //TODO: Define Player Start Coordinates here!
         int[] playerStartCoords = new int[]{300, 300, 1100, 300};
-        player1 = new Player(player1Character, playerStartCoords[0], playerStartCoords[1]);
-        player2 = new Player(player2Character, playerStartCoords[2], playerStartCoords[3]);
+        player1 = new Player(player1Character, 300, 300);
+        player2 = new Player(player2Character, 1100, 300);
 
         currentPlayer = player1;
+        System.out.println(player1.getXPos());
+        System.out.println(player1.getWeapon().getXPos() + ", " + player1.getWeapon().getYPos());
+        System.out.println(player2.getWeapon().getXPos() + ", " + player2.getWeapon().getYPos());
 
-        //System.out.println(player1.getXPos() + ", " + player1.getYPos());
-        //System.out.println(player1.getXPos() + player1.getWidth());
 
         //DefineHealthBarDisplay
-        p1HealthBar.setValue(100);
-        p2HealthBar.setValue(100);
+        p1HealthBar.setMaximum(100);
+        p2HealthBar.setMaximum(100);
+        p1HealthBar.setValue(player1.getHealth());
+        p2HealthBar.setValue(player2.getHealth());
 
         //MouseListener
         pauseListeners = false;
+
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -134,6 +138,15 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             pauseListeners = false;
             mouseReleased = false;
             currentFrameNum = 0;
+
+            //Switch Current Player
+            if (currentPlayer == player1) {
+                currentPlayer = player2;
+            } else {
+                currentPlayer = player1;
+            }
+
+            System.out.println("Current Turn: " + currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
         } else {
             currentFrameNum++;
             repaint();
@@ -142,13 +155,8 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     //Method for drawing the fire path preview
     private void drawFirePath(Graphics g) {
-        currentPlayer.setXPos(300);
-        currentPlayer.setYPos(300);
-
         currentPlayer.getWeapon().setCoords(mouseXPosDragged, mouseYPosDragged);
-        //System.out.println("Mouse Coords: " + mouseXPosDragged + ", " + mouseYPosDragged);
-
-        g.drawOval(30, 30, 30, 30);
+        System.out.println(currentPlayer.getWeapon().getXPos());
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
         int[][] testingLongList = currentPlayer.getWeapon().getPathFull();
 
@@ -169,9 +177,13 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         Weapons currentWeapon = currentPlayer.getWeapon();
 
-        g.drawImage(currentPlayer.getImage(), currentPlayer.getXPos(), currentPlayer.getYPos(), this);
-        System.out.println(currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
+        g.drawImage(player1.getImage(), player1.getXPos(), player1.getYPos(), this);
+        g.drawImage(player2.getImage(), player2.getXPos(), player2.getYPos(), this);
         //g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
+
+        //Update Player Health
+        p1HealthBar.setValue(player1.getHealth());
+        p2HealthBar.setValue(player2.getHealth());
 
         if (mouseIsDown) {
             drawFirePath(g);
@@ -193,11 +205,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             testingProj.setYPos(currentProjectileYPos);
             //g.drawImage(testingProj.getImage(), testingProj.getXPos() + testingProj.getXCenterBall(), testingProj.getYPos() + testingProj.getYCenterBall(), this);
 
-            if(currentPlayer.getWeapon().getProjectile().getHitbox().intersects("Hitbox1") || ) {
-                mouseReleased = false;
-            } else if (currentPlayer.getWeapon().getProjectile().getHitbox().intersects("Player 2 hitbox")) {
-                
-            }
 
             try {
                 Thread.sleep((int) (50 / currentPlayer.getWeapon().getSpeed()));
@@ -210,7 +217,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new Game("wizard", "ballista", 0);
+            new Game("wizard", "wizard", 0);
         });
     }
 
@@ -302,6 +309,9 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         gameFieldPanel = new JPanel();
         gameFieldPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         gamePanel.add(gameFieldPanel, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(1400, 500), null, 0, false));
+        final JLabel label1 = new JLabel();
+        label1.setText("Label");
+        gameFieldPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
