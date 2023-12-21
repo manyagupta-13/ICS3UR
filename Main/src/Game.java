@@ -154,11 +154,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
         int[][] testingLongList = currentPlayer.getWeapon().getPathFull();
 
-        //System.out.println("XPos on short list: " + tempProjectedPoints[0][0]);
-        //System.out.println("XPos on long list: " + testingLongList[0][0]);
-//        System.out.println(Arrays.toString(tempProjectedPoints[0]) + ", " + Arrays.toString(tempProjectedPoints[1]));
-//        System.out.println(Arrays.toString(testingLongList[0]) + ", " + Arrays.toString(testingLongList[1]));
-
         int radius = 9;
 
         for (int i = 0; i < 3; i++) {
@@ -175,29 +170,12 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         super.paintComponents(g);
 
         Weapons currentWeapon = currentPlayer.getWeapon();
+
         g.drawImage(currentPlayer.getImage(), currentPlayer.getXPos(), currentPlayer.getYPos(), this);
         System.out.println(currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
         //g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
 
         if (mouseIsDown) {
-            AffineTransform originalTransform = g2d.getTransform();
-            AffineTransform rotationTransform = new AffineTransform();
-            currentWeapon.setCoords(mouseXPosDragged, mouseYPosDragged);
-
-            rotationTransform.rotate(currentWeapon.getTheta(), currentWeapon.getXPos() + (double) currentWeapon.getWidth() / 2, currentWeapon.getYPos() + (double) currentWeapon.getHeight() / 2);
-            g2d.setTransform(rotationTransform);
-            System.out.println(currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
-            g.drawOval(300, 300, 50, 50);
-            g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
-
-
-            //g2d.rotate(currentWeapon.getTheta(), currentWeapon.getXPos() + currentWeapon.getWidth() / 2, currentWeapon.getYPos() + currentWeapon.getHeight() / 2);
-            //g2d.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
-
-
-            // Restore the original transformation to avoid affecting other drawings
-            g2d.setTransform(originalTransform);
-
             drawFirePath(g);
 
         } else if (mouseReleased) {
@@ -210,11 +188,8 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             int currentProjectileXPos = tempProjectedPoints[0][currentFrameNum] + currentPlayer.getWeapon().getXPos();
             int currentProjectileYPos = tempProjectedPoints[1][currentFrameNum] + currentPlayer.getWeapon().getYPos();
 
-            //System.out.println(currentProjectileXPos + ", " + currentProjectileYPos);
-            //System.out.println("Frame Number: " + currentFrameNum);
 
             g.drawOval(currentProjectileXPos, currentProjectileYPos, 10, 10);
-            g.drawOval(100 + 5 * currentFrameNum, 100 + 5 * currentFrameNum, 10, 10);
             testingProj.setXPos(currentProjectileXPos);
             testingProj.setYPos(currentProjectileYPos);
             //g.drawImage(testingProj.getImage(), testingProj.getXPos() + testingProj.getXCenterBall(), testingProj.getYPos() + testingProj.getYCenterBall(), this);
