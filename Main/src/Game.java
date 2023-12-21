@@ -105,7 +105,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             }
         });
 
-
         addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -115,7 +114,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
                 }
                 repaint();
             }
-
 
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -142,7 +140,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         }
     }
 
-
+    //Method for drawing the fire path preview
     private void drawFirePath(Graphics g) {
         currentPlayer.setXPos(300);
         currentPlayer.setYPos(300);
@@ -189,10 +187,17 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             int currentProjectileYPos = tempProjectedPoints[1][currentFrameNum] + currentPlayer.getWeapon().getYPos();
 
 
+            //TODO: Change Oval Projectile into Projectile Object
             g.drawOval(currentProjectileXPos, currentProjectileYPos, 10, 10);
             testingProj.setXPos(currentProjectileXPos);
             testingProj.setYPos(currentProjectileYPos);
             //g.drawImage(testingProj.getImage(), testingProj.getXPos() + testingProj.getXCenterBall(), testingProj.getYPos() + testingProj.getYCenterBall(), this);
+
+            if(currentPlayer.getWeapon().getProjectile().getHitbox().intersects("Hitbox1") || ) {
+                mouseReleased = false;
+            } else if (currentPlayer.getWeapon().getProjectile().getHitbox().intersects("Player 2 hitbox")) {
+                
+            }
 
             try {
                 Thread.sleep((int) (50 / currentPlayer.getWeapon().getSpeed()));
@@ -210,16 +215,13 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     }
 
 
-    //Map Drawings
-    //TODO: (Chris) Add Obstacle design in drawMap# Methods
-
     private void testMap(Graphics g) {
     }
 
     private void drawMap1(Graphics g) {
-        //Example code on drawing a rectangle (You specify xPos and yPos for each rectangle)
-        //g.setColor(Color.BLUE);
-        //g.fillRect(xPos, yPos, 50, 50)
+        ImageIcon background1ImgIcon = new ImageIcon("C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Field1Final.png");
+
+
     }
 
     private void drawMap2(Graphics g) {

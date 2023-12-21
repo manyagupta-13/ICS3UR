@@ -12,11 +12,13 @@ public class Weapons {
   private double v0, theta, t, range;
   private int xPos, yPos;
   private int width, height;
+  private Projectile projectile;
 
   public Weapons(String weapon) {
     xPos = 0;
     yPos = 0;
     speedMod = 2;
+    projectile = new Projectile(0, )
     ImageIcon tempIcon = new ImageIcon("C:\\Users\\kalew\\IdeaProjects\\ICS3UR - Group Project Bowmasters\\src\\WizardWeaponStandin.JPG");
     width = tempIcon.getIconWidth();
     height = tempIcon.getIconHeight();
@@ -56,6 +58,10 @@ public class Weapons {
 
   public double getTheta() {
     return theta;
+  }
+
+  public Projectile getProjectile() {
+    return projectile;
   }
 
   public void setCoords(int mx, int my) {
