@@ -14,7 +14,8 @@ public class Weapons {
   // TODO: scale mx,my to fit screen
   private double v0, theta, t, range;
   private int xPos, yPos;
-  private int width, height;
+  private final int width;
+  private final int height;
 
   // public Weapons(double dmg, int power, double speed, Image img){
 

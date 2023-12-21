@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
@@ -65,8 +66,8 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         currentPlayer = player1;
 
-        System.out.println(player1.getXPos() + ", " + player1.getYPos());
-        System.out.println(player1.getXPos() + player1.getWidth());
+        //System.out.println(player1.getXPos() + ", " + player1.getYPos());
+        //System.out.println(player1.getXPos() + player1.getWidth());
 
         //DefineHealthBarDisplay
         p1HealthBar.setValue(100);
@@ -81,7 +82,9 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                mouseIsDown = true;
+                if (!pauseListeners) {
+                    mouseIsDown = true;
+                }
             }
 
             @Override
@@ -145,14 +148,14 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         currentPlayer.setYPos(300);
 
         currentPlayer.getWeapon().setCoords(mouseXPosDragged, mouseYPosDragged);
-        System.out.println("Mouse Coords: " + mouseXPosDragged + ", " + mouseYPosDragged);
+        //System.out.println("Mouse Coords: " + mouseXPosDragged + ", " + mouseYPosDragged);
 
         g.drawOval(30, 30, 30, 30);
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
         int[][] testingLongList = currentPlayer.getWeapon().getPathFull();
 
-        System.out.println("XPos on short list: " + tempProjectedPoints[0][0]);
-        System.out.println("XPos on long list: " + testingLongList[0][0]);
+        //System.out.println("XPos on short list: " + tempProjectedPoints[0][0]);
+        //System.out.println("XPos on long list: " + testingLongList[0][0]);
 //        System.out.println(Arrays.toString(tempProjectedPoints[0]) + ", " + Arrays.toString(tempProjectedPoints[1]));
 //        System.out.println(Arrays.toString(testingLongList[0]) + ", " + Arrays.toString(testingLongList[1]));
 
@@ -161,7 +164,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         for (int i = 0; i < 3; i++) {
             g.setColor(Color.BLUE);
             g.drawOval(tempProjectedPoints[0][i] + currentPlayer.getWeapon().getXPos(), tempProjectedPoints[1][i] + currentPlayer.getWeapon().getYPos(), radius, radius);
-
             radius -= 3;
         }
     }
@@ -174,11 +176,28 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         Weapons currentWeapon = currentPlayer.getWeapon();
         g.drawImage(currentPlayer.getImage(), currentPlayer.getXPos(), currentPlayer.getYPos(), this);
-        g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
+        System.out.println(currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
+        //g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
 
         if (mouseIsDown) {
+            AffineTransform originalTransform = g2d.getTransform();
+            AffineTransform rotationTransform = new AffineTransform();
+            currentWeapon.setCoords(mouseXPosDragged, mouseYPosDragged);
+
+            rotationTransform.rotate(currentWeapon.getTheta(), currentWeapon.getXPos() + (double) currentWeapon.getWidth() / 2, currentWeapon.getYPos() + (double) currentWeapon.getHeight() / 2);
+            g2d.setTransform(rotationTransform);
+            System.out.println(currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
+            g.drawOval(300, 300, 50, 50);
             g.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
-            //((Graphics2D) g).rotate(currentWeapon.getTheta(), currentWeapon.getXPos() + currentWeapon.getWidth(), currentWeapon.getYPos() + currentWeapon.getHeight());
+
+
+            //g2d.rotate(currentWeapon.getTheta(), currentWeapon.getXPos() + currentWeapon.getWidth() / 2, currentWeapon.getYPos() + currentWeapon.getHeight() / 2);
+            //g2d.drawImage(currentWeapon.getDisplayImg(), currentWeapon.getXPos(), currentWeapon.getYPos(), this);
+
+
+            // Restore the original transformation to avoid affecting other drawings
+            g2d.setTransform(originalTransform);
+
             drawFirePath(g);
 
         } else if (mouseReleased) {
@@ -191,8 +210,8 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             int currentProjectileXPos = tempProjectedPoints[0][currentFrameNum] + currentPlayer.getWeapon().getXPos();
             int currentProjectileYPos = tempProjectedPoints[1][currentFrameNum] + currentPlayer.getWeapon().getYPos();
 
-            System.out.println(currentProjectileXPos + ", " + currentProjectileYPos);
-            System.out.println("Frame Number: " + currentFrameNum);
+            //System.out.println(currentProjectileXPos + ", " + currentProjectileYPos);
+            //System.out.println("Frame Number: " + currentFrameNum);
 
             g.drawOval(currentProjectileXPos, currentProjectileYPos, 10, 10);
             g.drawOval(100 + 5 * currentFrameNum, 100 + 5 * currentFrameNum, 10, 10);
@@ -226,21 +245,17 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         //Example code on drawing a rectangle (You specify xPos and yPos for each rectangle)
         //g.setColor(Color.BLUE);
         //g.fillRect(xPos, yPos, 50, 50)
-
     }
 
     private void drawMap2(Graphics g) {
-
     }
 
     private void drawMap3(Graphics g) {
-
     }
 
     //Mouse Input Listener Methods
     @Override
     public void mouseDragged(MouseEvent e) {
-
     }
 
     //mouseMoved method from MouseMotionListener interface - never used
@@ -250,12 +265,10 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
