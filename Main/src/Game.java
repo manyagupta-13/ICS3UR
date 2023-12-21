@@ -27,6 +27,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     private final Player player1;
     private final Player player2;
     private Player currentPlayer;
+    private Player inActivePlayer;
 
     //Mouse Tracking Instance Variables
     private int mouseXPosDragged;
@@ -50,7 +51,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
         //Set Starting Positions and Content Panel
         setContentPane(gamePanel);
-        setTitle("[GAME NAME]");
+        setTitle("Wizard Battle!");
 
         //Define Panel Attributes
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -65,6 +66,8 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         player2 = new Player(player2Character, 1100, 300);
 
         currentPlayer = player1;
+        inActivePlayer = player2;
+
         System.out.println(player1.getXPos());
         System.out.println(player1.getWeapon().getXPos() + ", " + player1.getWeapon().getYPos());
         System.out.println(player2.getWeapon().getXPos() + ", " + player2.getWeapon().getYPos());
@@ -142,8 +145,10 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             //Switch Current Player
             if (currentPlayer == player1) {
                 currentPlayer = player2;
+                inActivePlayer = player1;
             } else {
                 currentPlayer = player1;
+                inActivePlayer = player2;
             }
 
             System.out.println("Current Turn: " + currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
@@ -193,18 +198,39 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             //Get projected points from current player's weapon
             int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
             flyingAnimationFrameNum = tempProjectedPoints[0].length;
-            Projectile testingProj = new Projectile(0, currentPlayer.getWeapon().getXPos(), currentPlayer.getWeapon().getXPos());
 
             int currentProjectileXPos = tempProjectedPoints[0][currentFrameNum] + currentPlayer.getWeapon().getXPos();
             int currentProjectileYPos = tempProjectedPoints[1][currentFrameNum] + currentPlayer.getWeapon().getYPos();
 
-
             //TODO: Change Oval Projectile into Projectile Object
-            g.drawOval(currentProjectileXPos, currentProjectileYPos, 10, 10);
-            testingProj.setXPos(currentProjectileXPos);
-            testingProj.setYPos(currentProjectileYPos);
+            int ovalDia = 10;
+            g.drawOval(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
+            Hitbox ovalHitbox = new Hitbox(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
+            g.drawRect(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
+            g.drawRect(player1.getHitbox().getXPos(), player1.getHitbox().getYPos(), player1.getWidth(), player1.getHeight());
+            g.drawRect(player2.getHitbox().getXPos(), player2.getHitbox().getYPos(), player2.getWidth(), player2.getHeight());
+            //Projectile testingProj = new Projectile(0, currentPlayer.getWeapon().getXPos(), currentPlayer.getWeapon().getXPos());
+            //testingProj.setXPos(currentProjectileXPos);
+            //testingProj.setYPos(currentProjectileYPos);
             //g.drawImage(testingProj.getImage(), testingProj.getXPos() + testingProj.getXCenterBall(), testingProj.getYPos() + testingProj.getYCenterBall(), this);
 
+            if (ovalHitbox.intersects(inActivePlayer.getHitbox())) {
+                inActivePlayer.setHealth(inActivePlayer.getHealth() - 20);
+                if (currentPlayer == player2) {
+                    p1HealthBar.setValue(player1.getHealth());
+                } else {
+                    p2HealthBar.setValue(player2.getHealth());
+                }
+
+                if (player1.getHealth() <= 0) {
+                    new GameOver("Player 2");
+                    setVisible(false);
+
+                } else if (player2.getHealth() <= 0) {
+                    new GameOver("Player 1");
+                    setVisible(false);
+                }
+            }
 
             try {
                 Thread.sleep((int) (50 / currentPlayer.getWeapon().getSpeed()));
@@ -215,11 +241,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new Game("wizard", "wizard", 0);
-        });
-    }
 
 
     private void testMap(Graphics g) {
@@ -309,9 +330,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         gameFieldPanel = new JPanel();
         gameFieldPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         gamePanel.add(gameFieldPanel, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(1400, 500), null, 0, false));
-        final JLabel label1 = new JLabel();
-        label1.setText("Label");
-        gameFieldPanel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

@@ -1,24 +1,40 @@
 public class Hitbox {
 
-  private int x, y;
-  private int width, height;
+    private int xPos, yPos;
+    private int width, height;
 
+    //Accessor Methods
+    public int getXPos() {
+        return xPos;
+    }
 
-  public Hitbox(int x, int y, int width, int height) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-  }
+    public int getYPos() {
+        return yPos;
+    }
 
-  public void set(int x, int y, int width, int height) {
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
-  }
+    public int getWidth() {
+        return width;
+    }
 
-  public boolean intersects(Hitbox h) {
-      return x + width >= h.x && h.x + h.width >= x && y + height >= h.y && h.y + h.height >= y;
-  }
+    public int getHeight() {
+        return height;
+    }
+
+    public Hitbox(int xPos, int yPos, int width, int height) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.width = width;
+        this.height = height;
+    }
+
+    public void set(int xPos, int yPos, int width, int height) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.width = width;
+        this.height = height;
+    }
+
+    public boolean intersects(Hitbox h) {
+        return xPos + width >= h.xPos && h.xPos + h.width >= xPos && yPos + height >= h.yPos && h.yPos + h.height >= yPos;
+    }
 }

@@ -14,7 +14,7 @@ public class Player {
 
 
     //Object to determine collision
-    private Hitbox hitbox = new Hitbox(getXPos(), getYPos(), getWidth(), getHeight());
+    private Hitbox hitbox;
 
     //Image for Player GUI Representation
     private Image playerImage = null;
@@ -37,6 +37,8 @@ public class Player {
                 playerImage = playerIcon.getImage();
                 width = playerIcon.getIconWidth();
                 height = playerIcon.getIconHeight();
+
+
             }
             case "cannon" -> {
                 health = 100;
@@ -50,8 +52,12 @@ public class Player {
             }
         }
 
+
         setXPos(startingXPos);
         setYPos(startingYPos);
+
+        //Set Hitbox
+        hitbox = new Hitbox(xPos, yPos, getWidth(), getHeight());
 
     }
 
@@ -104,7 +110,7 @@ public class Player {
         return playerImage;
     }
 
-    public Object getHitbox() {
+    public Hitbox getHitbox() {
         return hitbox;
     }
 }
