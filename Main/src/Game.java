@@ -1,17 +1,27 @@
+/*
+Game window GUI
+Kale Wu
+12/21/2023
+
+Window which integrates other classes to handle the GUI representation of the game.
+ */
+
+
+//Import Dependencies
+//Intellij UI Designer
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
+//JSwing and AWT for GUI Animation and Input Listening
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 public class Game extends JFrame implements MouseMotionListener, MouseListener {
-    //GUI Related Instance Variables
+    //Create GUI Objects
     private JPanel gamePanel;
     private JProgressBar p1HealthBar;
     private JProgressBar p2HealthBar;
@@ -19,8 +29,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
     private JLabel player2HealthLabel;
     private JPanel gameFieldPanel;
 
-    //Gameplay affecting variables
-    private final int mapSelection;
+    //Buffered Image for Background Rendering (Not yet integrated)
     private BufferedImage gameFieldVisuals;
 
     //Player variables
@@ -44,7 +53,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
 
     public Game(String player1Character, String player2Character, int mapSelection_) {
-        mapSelection = mapSelection_;
+        //Gameplay affecting variables
 
         //Initialise MouseMotion Listener
         addMouseMotionListener(this);
@@ -53,7 +62,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         setContentPane(gamePanel);
         setTitle("Wizard Battle!");
 
-        //Define Panel Attributes
+        //Define Panel Characteristics
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1400, 600);
         setLocationRelativeTo(null);
@@ -68,11 +77,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         currentPlayer = player1;
         inActivePlayer = player2;
 
-        System.out.println(player1.getXPos());
-        System.out.println(player1.getWeapon().getXPos() + ", " + player1.getWeapon().getYPos());
-        System.out.println(player2.getWeapon().getXPos() + ", " + player2.getWeapon().getYPos());
-
-
         //DefineHealthBarDisplay
         p1HealthBar.setMaximum(100);
         p2HealthBar.setMaximum(100);
@@ -82,6 +86,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         //MouseListener
         pauseListeners = false;
 
+        //Add Mouse Listener (Mouse Pressed and Release Detection) to Window
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -89,6 +94,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                //Set boolean variables
                 if (!pauseListeners) {
                     mouseIsDown = true;
                 }
@@ -96,6 +102,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                //Set boolean variables
                 if (!pauseListeners) {
                     mouseIsDown = false;
                     mouseReleased = true;
@@ -112,9 +119,11 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             }
         });
 
+        //Add Mouse Motion Listener to Window
         addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
+                //Continuously update position and rerender
                 if (!pauseListeners) {
                     mouseXPosDragged = e.getX();
                     mouseYPosDragged = e.getY();
@@ -131,9 +140,10 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         currentFrameNum = 0;
 
         repaint();
-        //TODO: Ensure connectivity to player objects
+
     }
 
+    //Method weaponFire recursively updates paint() to render the ball flying animation
     private void weaponFire(Graphics g) throws InterruptedException {
         //Get path from player's weapon
         if (currentFrameNum == flyingAnimationFrameNum - 1) {
@@ -151,7 +161,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
                 inActivePlayer = player2;
             }
 
-            System.out.println("Current Turn: " + currentPlayer.getXPos() + ", " + currentPlayer.getYPos());
         } else {
             currentFrameNum++;
             repaint();
@@ -160,13 +169,13 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     //Method for drawing the fire path preview
     private void drawFirePath(Graphics g) {
+        //Get coordinates from current player's weapon
         currentPlayer.getWeapon().setCoords(mouseXPosDragged, mouseYPosDragged);
-        System.out.println(currentPlayer.getWeapon().getXPos());
         int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathShort();
-        int[][] testingLongList = currentPlayer.getWeapon().getPathFull();
 
         int radius = 9;
 
+        //Draw points to represent path preview
         for (int i = 0; i < 3; i++) {
             g.setColor(Color.BLUE);
             g.drawOval(tempProjectedPoints[0][i] + currentPlayer.getWeapon().getXPos(), tempProjectedPoints[1][i] + currentPlayer.getWeapon().getYPos(), radius, radius);
@@ -180,8 +189,6 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponents(g);
 
-        Weapons currentWeapon = currentPlayer.getWeapon();
-
         //Draw Floor
         g.drawRect(0, player1.getYPos() + player1.getHeight(), 1400, 400);
         Hitbox groundHitbox = new Hitbox(0, player1.getYPos() + player1.getHeight(), 1400, 400);
@@ -194,11 +201,14 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         p1HealthBar.setValue(player1.getHealth());
         p2HealthBar.setValue(player2.getHealth());
 
+        //Draw Fire Path if mouse is down
         if (mouseIsDown) {
             drawFirePath(g);
 
         } else if (mouseReleased) {
+            //Pause input listeners
             pauseListeners = true;
+
             //Get projected points from current player's weapon
             int[][] tempProjectedPoints = currentPlayer.getWeapon().getPathFull();
             flyingAnimationFrameNum = tempProjectedPoints[0].length;
@@ -207,16 +217,19 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
             int currentProjectileXPos = tempProjectedPoints[0][currentFrameNum] + currentPlayer.getWeapon().getXPos();
             int currentProjectileYPos = tempProjectedPoints[1][currentFrameNum] + currentPlayer.getWeapon().getYPos();
 
-            //TODO: Change Oval Projectile into Projectile Object
+            //Oval with hitbox stand-in for not yet integrated Projectile class
             int ovalDia = 10;
             g.drawOval(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
             Hitbox ovalHitbox = new Hitbox(currentProjectileXPos, currentProjectileYPos, ovalDia, ovalDia);
+
+            //End animation of oval intersects ground
             if (ovalHitbox.intersects(groundHitbox)) {
                 currentFrameNum = flyingAnimationFrameNum - 1;
             }
 
-            //Collision Detection
+            //Projectile-Player Collision Detection
             if (ovalHitbox.intersects(inActivePlayer.getHitbox())) {
+                //Reduce health if collision is detected
                 inActivePlayer.setHealth(inActivePlayer.getHealth() - 20);
                 if (currentPlayer == player2) {
                     p1HealthBar.setValue(player1.getHealth());
@@ -224,6 +237,7 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
                     p2HealthBar.setValue(player2.getHealth());
                 }
 
+                //Check for player death
                 if (player1.getHealth() <= 0) {
                     new GameOver("Player 2");
                     setVisible(false);
@@ -244,28 +258,24 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
         }
     }
 
-
+    //Not yet integrated Map-GUI code framework
     private void testMap(Graphics g) {
     }
 
     private void drawMap1(Graphics g) {
-        ImageIcon background1ImgIcon = new ImageIcon("C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Field1Final.png");
-
-
+        //ImageIcon background1ImgIcon = new ImageIcon("C:\\Users\\kalew\\Documents\\GitHub\\ICS3UR\\Game Resources\\Field1Final.png");
     }
-
     private void drawMap2(Graphics g) {
     }
 
     private void drawMap3(Graphics g) {
     }
 
-    //Mouse Input Listener Methods
+    //Mouse Input Listener Methods from Interface (Not used)
     @Override
     public void mouseDragged(MouseEvent e) {
     }
 
-    //mouseMoved method from MouseMotionListener interface - never used
     @Override
     public void mouseMoved(MouseEvent e) {
     }
@@ -293,6 +303,8 @@ public class Game extends JFrame implements MouseMotionListener, MouseListener {
 
     }
 
+    //GUI Source code alternative to .form file (Converted automatically from .form file)
+    //Note: forms_rt.jar must be added to classpath in order to run this program!
 
     {
 // GUI initializer generated by IntelliJ IDEA GUI Designer

@@ -1,3 +1,11 @@
+/*
+Background2 Class (Not integrated)
+Chris Liu
+12/21/2023
+
+Class which creates a background and obstacle hitboxes to create a map (2/3)
+*/
+
 import javax.swing.*;
 import java.awt.*;
 

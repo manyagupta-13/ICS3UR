@@ -1,12 +1,24 @@
+/*
+Move Option Class (Not integrated)
+Kale Wu
+12/21/2023
+
+Creates a dialogue for player to choose between movement and attack options.
+*/
+
+//Import Dependencies
+//Intellij UI Designer
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
+//JSwing and AWT for GUI Animation and Input Listening
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MoveOption extends JFrame {
+    //Create GUI Objects
     private JButton attackButton;
     private JButton moveButton;
     private JLabel moveQuery;
@@ -14,6 +26,7 @@ public class MoveOption extends JFrame {
     private boolean attack;
 
     public MoveOption(int player) {
+        //Define Panel Characteristics
         setContentPane(moveOption);
         setTitle("Battlistas");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -21,7 +34,10 @@ public class MoveOption extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
+        //Prompt User Input
         moveQuery.setText("Player" + player + ". What would you like to do?");
+
+        //Button Listeners
         attackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,10 +53,6 @@ public class MoveOption extends JFrame {
                 dispose();
             }
         });
-    }
-
-    public static void main(String[] args) {
-        new MoveOption(2);
     }
 
     {

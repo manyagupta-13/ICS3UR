@@ -1,12 +1,24 @@
+/*
+Main Menu GUI
+Kale Wu
+12/21/2023
+
+Window which displays main menu and receives player inputs for game parameters (User decisions not integrated)
+ */
+
+//Import Dependencies
+//Intellij UI Designer
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
+//JSwing and AWT for GUI Animation and Input Listening
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainMenu extends JFrame {
+    //Create GUI Objects
     private JPanel main;
     private JPanel parentPanel;
     private JPanel mainMenu;
@@ -24,10 +36,12 @@ public class MainMenu extends JFrame {
     private JLabel gameOptionsMessage;
     private JLabel results;
 
+    //Character Choice Variables
     private String p1CharChoice = "";
     private String p2CharChoice = "";
 
     public MainMenu() {
+        //Define Panel Characteristics
         setContentPane(main);
         setTitle("Wizard Battle!");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,6 +52,7 @@ public class MainMenu extends JFrame {
         //MainMenu Menu Action Listener:
         //Action Listener for Play Button in MainMenu Menu
         playButton.addActionListener(new ActionListener() {
+            //Swap to GameOptions Card
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Swap to Game Option Menu
@@ -51,13 +66,13 @@ public class MainMenu extends JFrame {
 
         //Action Listener for Quit Button
         quitButton.addActionListener(new ActionListener() {
+            //Exit the program
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Exit the program
                 System.exit(0);
             }
         });
-
 
         //GameOption Action Listeners
         wizardRadioButtonP1.addActionListener(new ActionListener() {
@@ -92,11 +107,10 @@ public class MainMenu extends JFrame {
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Detect for empty character selections
                 if (p1CharChoice.isEmpty() || p2CharChoice.isEmpty()) {
                     gameOptionsMessage.setText("Please select characters for each player before starting!");
                 } else {
-                    //new Game(p1CharChoice, p2CharChoice, mapSelectionComboBox.getSelectedIndex());
-
                     //Unfinished: Only Wizard Option is Available
                     new Game("wizard1", "wizard", mapSelectionComboBox.getSelectedIndex());
                     setVisible(false);

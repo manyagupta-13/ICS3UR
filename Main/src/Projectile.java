@@ -1,19 +1,26 @@
+/*
+Projectile Class (Not integrated)
+Arnav Katoch
+12/21/2023
+
+Class which represents players in the game.
+*/
 
 import javax.swing.*;
-import java.awt.Image;
+import java.awt.*;
 
-public class Projectile{
+public class Projectile {
 
+    private final Image projectileImage;
+    private final int xCenterBall = 242;
+    private final int yCenterBall = 94;
+    Hitbox hitbox = new Hitbox(196, 48, 92, 92);
     // Attributes
-    private int weaponType;
+    private final int weaponType;
     private int xPos;
     private int yPos;
     private int damage;
-    Hitbox hitbox = new Hitbox(196, 48, 92, 92);
-    private final Image projectileImage;
     private int direction;
-    private final int xCenterBall = 242;
-    private final int yCenterBall = 94;
 
 
     public Projectile(int weaponType_, int xPos_, int yPos_) {
@@ -36,15 +43,15 @@ public class Projectile{
         return xPos;
     }
 
+    public void setXPos(int x) {
+        xPos = x;
+    }
+
     public int getYPos() {
         return yPos;
     }
 
-    public void setXPos(int x){
-        xPos = x;
-    }
-
-    public void setYPos(int y){
+    public void setYPos(int y) {
         yPos = y;
     }
 
@@ -61,7 +68,7 @@ public class Projectile{
         return direction;
     }
 
-    public void setDirection(int direction_){
+    public void setDirection(int direction_) {
         direction = direction_;
     }
 

@@ -1,3 +1,10 @@
+/*
+Weapons Class
+Jimmy Zhang
+12/21/2023
+
+Creates weapon object for player and handles parabola and direction calculations
+*/
 import javax.swing.*;
 import java.lang.Math;
 import java.awt.Image;

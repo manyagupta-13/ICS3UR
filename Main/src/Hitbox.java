@@ -1,3 +1,11 @@
+/*
+Hitbox Class
+Manya Gupta
+12/21/2023
+
+Hitbox Class for collision detection
+*/
+
 public class Hitbox {
 
     private int xPos, yPos;

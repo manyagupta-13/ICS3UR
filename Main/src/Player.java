@@ -1,3 +1,11 @@
+/*
+Player Class
+Manya Gupta
+12/21/2023
+
+Class which represents players in the game.
+*/
+
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
